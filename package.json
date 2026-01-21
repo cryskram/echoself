@@ -9,6 +9,7 @@
   },
   "dependencies": {
     "next": "16.1.4",
+    "openai": "^6.16.0",
     "react": "19.2.3",
     "react-dom": "19.2.3"
   },
@@ -17,6 +18,8 @@
     "@types/node": "^20",
     "@types/react": "^19",
     "@types/react-dom": "^19",
+    "prettier": "^3.8.0",
+    "prettier-plugin-tailwindcss": "^0.7.2",
     "tailwindcss": "^4",
     "typescript": "^5"
   }

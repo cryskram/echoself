@@ -1,0 +1,9 @@
+torch==2.1.0
+torchaudio==2.1.0
+numpy<2
+transformers==4.38.2
+accelerate
+scipy
+soundfile
+fastapi
+uvicorn
