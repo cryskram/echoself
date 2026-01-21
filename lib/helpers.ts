@@ -1,12 +1,4 @@
-export const GENRES = [
-  "Pop",
-  "Rock",
-  "EDM",
-  "Jazz",
-  "Hip Hop",
-  "Indie",
-  "Classical",
-];
+export const GENRES = ["rock", "edm", "chill", "jazz"];
 
 export const imagePrompt = (genre: string) => `
     Professional album cover portrait of the same person,

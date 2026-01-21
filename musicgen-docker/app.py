@@ -24,7 +24,8 @@ with torch.no_grad():
     _ = model.generate(
         **processor(text="warm up", return_tensors="pt"),
         max_new_tokens=32,
-        do_sample=False,
+        do_sample=True,
+        temperature=1.0,
     )
 
 
@@ -37,7 +38,9 @@ def generate(req: Req):
     inputs = processor(text=req.prompt, return_tensors="pt")
 
     with torch.no_grad():
-        audio_values = model.generate(**inputs, max_new_tokens=384, do_sample=False)
+        audio_values = model.generate(
+            **inputs, max_new_tokens=384, do_sample=True, temperature=1.0
+        )
 
     audio = audio_values[0].cpu().numpy()
 

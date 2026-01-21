@@ -27,7 +27,7 @@ export default function Home() {
   }
 
   return (
-    <main className="flex min-h-screen items-center justify-center bg-gradient-to-br from-black via-zinc-900 to-black p-6 text-white">
+    <main className="flex min-h-screen items-center justify-center bg-linear-to-br from-black via-zinc-900 to-black p-6 text-white">
       <div className="w-full max-w-xl space-y-6">
         <div className="text-center">
           <h1 className="text-4xl font-bold tracking-tight">EchoSelf</h1>
@@ -36,16 +36,25 @@ export default function Home() {
 
         <div className="space-y-6 rounded-2xl bg-zinc-900/70 p-6 shadow-xl backdrop-blur">
           <ImageUpload onSelect={setImage} />
-          <GenrePicker onPick={setGenre} />
+          <GenrePicker value={genre} onPick={setGenre} />
+
+          {genre && (
+            <p className="text-center text-sm text-zinc-400">
+              Selected:{" "}
+              <span className="font-medium text-white">
+                {genre.toUpperCase()}
+              </span>
+            </p>
+          )}
 
           <button
             disabled={loading}
             onClick={generate}
             className={`w-full rounded-xl py-3 font-semibold transition ${
-              loading
-                ? "cursor-not-allowed bg-zinc-700"
+              loading || !genre
+                ? "cursor-not-allowed bg-zinc-700 text-zinc-400"
                 : "bg-white text-black hover:bg-zinc-200"
-            }`}
+            } `}
           >
             {loading ? "Creating your vibe…" : "Generate My Echo"}
           </button>
