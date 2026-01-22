@@ -3,7 +3,7 @@
 import { useSearchParams } from "next/navigation";
 import { QRCodeSVG } from "qrcode.react";
 
-const CLOUDINARY_BASE = `https://res.cloudinary.com/${process.env.CLOUDINARY_CLOUD_NAME}/image/upload/echoself`;
+const CLOUDINARY_BASE = `https://res.cloudinary.com/${process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME}/image/upload/echoself`;
 
 export default function ResultClient() {
   const params = useSearchParams();
