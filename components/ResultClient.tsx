@@ -1,30 +1,40 @@
 "use client";
 
 import { useSearchParams } from "next/navigation";
-import Image from "next/image";
-import AudioPlayer from "@/components/AudioPlayer";
+import { QRCodeSVG } from "qrcode.react";
 
 export default function ResultClient() {
   const params = useSearchParams();
-  const img = params.get("img")!;
-  const audio = params.get("audio")!;
+  const img = params.get("img");
+  const audio = params.get("audio");
+
+  if (!img) return null;
+
+  const shareUrl =
+    typeof window !== "undefined"
+      ? `${window.location.origin}/share?img=${encodeURIComponent(
+          img
+        )}&audio=${encodeURIComponent(audio ?? "")}`
+      : "";
 
   return (
-    <main className="flex min-h-screen items-center justify-center bg-linear-to-br from-black to-zinc-900 p-6 text-white">
-      <div className="w-full max-w-md space-y-6 text-center">
+    <main className="flex min-h-screen items-center justify-center bg-black p-6 text-white">
+      <div className="max-w-md space-y-6 text-center">
         <h2 className="text-2xl font-semibold">Your Echo</h2>
 
-        <Image
-          src={img}
-          width={512}
-          height={512}
-          alt="Generated album art"
-          className="rounded-2xl shadow-xl"
-        />
+        <img src={img} className="rounded-2xl shadow-xl" />
 
-        <AudioPlayer src={audio} />
+        {audio && <audio controls src={audio} className="w-full" />}
 
-        <p className="text-sm text-zinc-400">Generated locally using AI</p>
+        <div className="flex flex-col items-center gap-2">
+          <QRCodeSVG
+            value={shareUrl}
+            size={160}
+            bgColor="#000"
+            fgColor="#fff"
+          />
+          <p className="text-xs text-zinc-400">Scan to view & download</p>
+        </div>
       </div>
     </main>
   );
