@@ -23,7 +23,8 @@ export default function Home() {
     });
 
     const data = await res.json();
-    window.location.href = `/result?img=${data.imageUrl}&audio=${data.audioUrl}`;
+
+    window.location.href = `/result?img=${data.imageFile}&audio=${data.audioFile}&genre=${data.genre}`;
   }
 
   return (
