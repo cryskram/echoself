@@ -1,71 +1,160 @@
-export const GENRES = ["rock", "edm", "chill", "jazz"] as const;
+export const GENRES = [
+  "rock",
+  "edm",
+  "chill",
+  "jazz",
+  "hindustani",
+  "carnatic",
+  "indian",
+  "bollywood",
+] as const;
 
 const GENRE_STYLES: Record<string, string> = {
   rock: `
-    dark rock concert stage,
-    gritty atmosphere,
-    leather jacket, distressed clothing,
-    dramatic shadows, high contrast lighting,
-    rebellious, raw energy
+    gritty modern rock album cover,
+    moody concert-stage atmosphere,
+    dark textured background with subtle grain,
+    leather or denim clothing with rugged details,
+    dramatic directional lighting,
+    high contrast shadows,
+    rebellious, intense, raw energy,
+    bold masculine or edgy aesthetic
   `,
+
   edm: `
-    futuristic neon club environment,
-    cyberpunk lighting,
-    LED lights, lasers, holograms,
-    modern streetwear, bold colors,
-    energetic, high saturation
+    futuristic electronic music album cover,
+    neon-lit club or abstract digital environment,
+    vibrant cyan, magenta, purple lighting,
+    LED glow, light streaks, subtle motion blur,
+    modern streetwear or minimal tech fashion,
+    high saturation, glossy finish,
+    energetic, night-life driven atmosphere
   `,
+
   chill: `
-    calm minimalist background,
-    soft pastel colors,
-    cozy oversized clothing,
-    warm ambient lighting,
-    dreamy, relaxed mood
+    chill lo-fi album cover aesthetic,
+    soft minimalist background,
+    muted pastel color palette,
+    cozy oversized clothing or casual wear,
+    warm diffused lighting,
+    relaxed body language,
+    dreamy, introspective, calm mood,
+    gentle cinematic softness
   `,
+
   jazz: `
-    elegant vintage jazz club,
-    warm golden lighting,
-    classy tailored outfit,
-    timeless, sophisticated atmosphere
+    classic jazz album cover,
+    intimate vintage jazz club environment,
+    warm amber and golden lighting,
+    elegant formal or semi-formal attire,
+    timeless cinematic composition,
+    subtle film grain,
+    sophisticated, soulful, late-night atmosphere
+  `,
+
+  hindustani: `
+    hindustani classical album cover,
+    serene and meditative atmosphere,
+    rich earthy tones (deep browns, maroon, gold),
+    traditional north indian attire (kurta, shawl, dupatta inspired styling),
+    soft warm stage lighting,
+    spiritual and contemplative mood,
+    dignified classical elegance,
+    refined cultural authenticity
+  `,
+
+  carnatic: `
+    carnatic classical album cover,
+    south indian classical concert aesthetic,
+    bright yet warm color palette,
+    traditional south indian attire (silk textures, veshti or saree inspired styling),
+    temple or heritage auditorium inspired backdrop,
+    rhythmic, disciplined, energetic mood,
+    cultural richness with refined precision
+  `,
+
+  indian: `
+    modern indian fusion album cover,
+    culturally rooted yet contemporary aesthetic,
+    warm rich colors inspired by indian art (indigo, ivory, gold, maroon),
+    elegant indo-fusion clothing,
+    handcrafted fabric textures,
+    cinematic lighting with emotional depth,
+    calm, expressive, soulful atmosphere,
+    premium cultural elegance
+  `,
+
+  bollywood: `
+    bollywood film music album cover,
+    cinematic storytelling composition,
+    emotional expressive lighting,
+    rich color grading with soft highlights,
+    contemporary indian fashion with film-style flair,
+    dramatic yet polished mood,
+    romantic or uplifting energy,
+    grand cinematic presence without exaggeration
   `,
 };
 
 export const imagePrompt = (genre: string) => `
-Use the uploaded image as a strict identity reference.
+The uploaded image is a FACE IDENTITY REFERENCE.
 
-The person must be the SAME individual:
-- same face
-- same facial features
-- same identity
-- realistic likeness
+CRITICAL IDENTITY RULES (HIGHEST PRIORITY):
+- The generated person must be IDENTICAL to the uploaded person
+- Preserve exact facial structure, proportions, and bone structure
+- Preserve eye shape, nose shape, lip shape, jawline, and cheekbones
+- Preserve skin tone, age, gender, and ethnicity
+- This is NOT a new person
+- This is NOT a reinterpretation
+- This is NOT a look-alike
+- It is the SAME person photographed in a different scene
 
-Completely change EVERYTHING ELSE:
-- replace background
-- replace clothing
-- replace lighting and color palette
+FORBIDDEN CHANGES:
+- Do NOT redesign or beautify the face
+- Do NOT alter facial proportions or symmetry
+- Do NOT stylize the face
+- Do NOT exaggerate features
+- Do NOT add heavy makeup that changes face shape
 
-Create a professional album cover portrait.
+HAIR RULES:
+- Hairstyle must remain very similar to the uploaded image
+- Same hair length and hairline
+- Only minor styling adjustments allowed
 
-STYLE:
+ALLOWED CHANGES (DO NOT AFFECT FACE):
+- Background
+- Clothing
+- Environment
+- Lighting and color palette
+
+Create a professional ALBUM COVER PORTRAIT.
+
+STYLE DIRECTION:
 ${GENRE_STYLES[genre]}
 
 TEXT ON IMAGE:
 - Include the genre name "${genre.toUpperCase()}"
-- Displayed as clean, bold album-cover typography
-- Positioned either at the top or bottom of the image
+- Clean, bold album-cover typography
+- Positioned at top or bottom of the image
 - High contrast and clearly readable
-- Modern, stylish font appropriate for the genre
-- Text must be spelled correctly
-- No other text besides the genre name
+- Modern, genre-appropriate font
+- Correct spelling
+- NO other text
 
 PHOTOGRAPHY:
+- photorealistic
 - cinematic studio lighting
 - shallow depth of field
-- sharp focus on subject
+- sharp focus on face
 - ultra-detailed
 - award-winning album cover quality
 
-No logos, no watermarks, no extra text.
+FINAL CONSTRAINTS:
+- Face must look photorealistic and consistent with the original photo
+- No illustration, no cartoon, no anime, no painterly style
+- No logos
+- No watermarks
+- No extra text
 `;
 
 // export const musicPrompt = (genre: string) =>
