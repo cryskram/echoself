@@ -85,14 +85,15 @@ const GENRE_STYLES: Record<string, string> = {
   `,
 
   bollywood: `
-    bollywood film music album cover,
-    cinematic storytelling composition,
-    emotional expressive lighting,
-    rich color grading with soft highlights,
-    contemporary indian fashion with film-style flair,
-    dramatic yet polished mood,
-    romantic or uplifting energy,
-    grand cinematic presence without exaggeration
+    cinematic Bollywood movie poster aesthetic,
+    modern Indian film styling,
+    dramatic cinematic lighting with soft glow,
+    expressive emotional mood,
+    stylish contemporary Indian outfit (movie-style, not traditional concert wear),
+    rich colors with warm highlights,
+    shallow depth of field,
+    glamorous yet grounded look,
+    polished commercial film production feel
   `,
 };
 
