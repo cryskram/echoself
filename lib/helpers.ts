@@ -94,6 +94,7 @@ const GENRE_STYLES: Record<string, string> = {
     shallow depth of field,
     glamorous yet grounded look,
     polished commercial film production feel
+    influenced by modern Indian cinema and mainstream film posters
   `,
 };
 
