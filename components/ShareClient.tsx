@@ -2,7 +2,9 @@
 
 import { useSearchParams } from "next/navigation";
 
-const CLOUDINARY_BASE = `https://res.cloudinary.com/${process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME}/image/upload/echoself`;
+const CLOUDINARY_IMAGE_BASE = `https://res.cloudinary.com/${process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME}/image/upload/echoself`;
+
+const CLOUDINARY_AUDIO_BASE = `https://res.cloudinary.com/${process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME}/video/upload/echoself/music`;
 
 export default function ShareClient() {
   const params = useSearchParams();
@@ -16,8 +18,8 @@ export default function ShareClient() {
   if (!/^[a-zA-Z0-9-_]+\.(png|jpg|jpeg)$/.test(img)) return null;
   if (audio && !/^[a-zA-Z0-9-_]+\.wav$/.test(audio)) return null;
 
-  const imageUrl = `${CLOUDINARY_BASE}/${img}`;
-  const audioUrl = audio ? `/music/${genre}/${audio}` : null;
+  const imageUrl = `${CLOUDINARY_IMAGE_BASE}/${img}`;
+  const audioUrl = audio ? `${CLOUDINARY_AUDIO_BASE}/${genre}/${audio}` : null;
 
   return (
     <main className="flex min-h-screen items-center justify-center bg-black p-6 text-white">

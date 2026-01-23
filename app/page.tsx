@@ -24,7 +24,14 @@ export default function Home() {
 
     const data = await res.json();
 
-    window.location.href = `/result?img=${data.imageFile}&audio=${data.audioFile}&genre=${data.genre}`;
+    if (!data.img || !data.audio || !data.genre) {
+      console.error("Invalid API response", data);
+      setLoading(false);
+      alert("Generation failed. Please try again.");
+      return;
+    }
+
+    window.location.href = `/result?img=${data.img}&audio=${data.audio}&genre=${data.genre}`;
   }
 
   return (

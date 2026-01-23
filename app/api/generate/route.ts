@@ -25,19 +25,16 @@ export async function POST(req: Request) {
   // const { audioUrl } = await musicRes.json();
 
   const imageUrl = await generateImage(image, imagePrompt(genre));
+  const imageFile = extractFilename(imageUrl);
 
-  const audioUrl = getRandomMusic(genre);
-
-  if (!audioUrl) {
+  const music = getRandomMusic(genre);
+  if (!music) {
     return Response.json({ error: "Invalid genre" }, { status: 400 });
   }
 
-  const imageFilename = extractFilename(imageUrl);
-  const audioFilename = extractFilename(audioUrl);
-
   return Response.json({
-    imageFile: imageFilename,
-    audioFile: audioFilename,
+    img: imageFile,
+    audio: music.file,
     genre,
   });
 }

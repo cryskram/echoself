@@ -1,60 +1,39 @@
+const CLOUDINARY_AUDIO_BASE = `https://res.cloudinary.com/${process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME}/video/upload/echoself/music`;
+
 const MUSIC: Record<string, string[]> = {
-  rock: [
-    "/music/rock/rock_1.wav",
-    "/music/rock/rock_2.wav",
-    "/music/rock/rock_3.wav",
-    "/music/rock/rock_4.wav",
-  ],
-  edm: [
-    "/music/edm/edm_1.wav",
-    "/music/edm/edm_2.wav",
-    "/music/edm/edm_3.wav",
-    "/music/edm/edm_4.wav",
-  ],
-  chill: [
-    "/music/chill/chill_1.wav",
-    "/music/chill/chill_2.wav",
-    "/music/chill/chill_3.wav",
-    "/music/chill/chill_4.wav",
-  ],
-  jazz: [
-    "/music/jazz/jazz_1.wav",
-    "/music/jazz/jazz_2.wav",
-    "/music/jazz/jazz_3.wav",
-    "/music/jazz/jazz_4.wav",
-  ],
-
+  rock: ["rock_1.wav", "rock_2.wav", "rock_3.wav", "rock_4.wav"],
+  edm: ["edm_1.wav", "edm_2.wav", "edm_3.wav", "edm_4.wav"],
+  chill: ["chill_1.wav", "chill_2.wav", "chill_3.wav", "chill_4.wav"],
+  jazz: ["jazz_1.wav", "jazz_2.wav", "jazz_3.wav", "jazz_4.wav"],
   hindustani: [
-    "/music/hindustani/hindustani_1.wav",
-    "/music/hindustani/hindustani_2.wav",
-    "/music/hindustani/hindustani_3.wav",
-    "/music/hindustani/hindustani_4.wav",
+    "hindustani_1.wav",
+    "hindustani_2.wav",
+    "hindustani_3.wav",
+    "hindustani_4.wav",
   ],
-
   carnatic: [
-    "/music/carnatic/carnatic_1.wav",
-    "/music/carnatic/carnatic_2.wav",
-    "/music/carnatic/carnatic_3.wav",
-    "/music/carnatic/carnatic_4.wav",
+    "carnatic_1.wav",
+    "carnatic_2.wav",
+    "carnatic_3.wav",
+    "carnatic_4.wav",
   ],
-
-  indian: [
-    "/music/indian/indian_1.wav",
-    "/music/indian/indian_2.wav",
-    "/music/indian/indian_3.wav",
-    "/music/indian/indian_4.wav",
-  ],
-
+  indian: ["indian_1.wav", "indian_2.wav", "indian_3.wav", "indian_4.wav"],
   bollywood: [
-    "/music/bollywood/bollywood_1.wav",
-    "/music/bollywood/bollywood_2.wav",
-    "/music/bollywood/bollywood_3.wav",
-    "/music/bollywood/bollywood_4.wav",
+    "bollywood_1.wav",
+    "bollywood_2.wav",
+    "bollywood_3.wav",
+    "bollywood_4.wav",
   ],
 };
 
 export function getRandomMusic(genre: string) {
   const tracks = MUSIC[genre];
   if (!tracks) return null;
-  return tracks[Math.floor(Math.random() * tracks.length)];
+
+  const file = tracks[Math.floor(Math.random() * tracks.length)];
+
+  return {
+    file,
+    url: `${CLOUDINARY_AUDIO_BASE}/${genre}/${file}`,
+  };
 }
