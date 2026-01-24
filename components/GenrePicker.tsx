@@ -11,7 +11,7 @@ export default function GenrePicker({
 }) {
   return (
     <div>
-      <p className="mb-2 text-sm text-zinc-400">Choose a genre</p>
+      <p className="mb-2 text-sm font-medium text-zinc-600">Choose a genre</p>
 
       <div className="grid grid-cols-2 gap-3">
         {GENRES.map((g) => {
@@ -21,11 +21,11 @@ export default function GenrePicker({
             <button
               key={g}
               onClick={() => onPick(g)}
-              className={`rounded-xl border p-3 text-sm font-medium transition ${
+              className={`rounded-xl border px-4 py-3 text-sm font-medium transition ${
                 selected
-                  ? "border-white bg-white text-black shadow-lg"
-                  : "border-zinc-700 text-white hover:bg-white hover:text-black"
-              } `}
+                  ? "border-zinc-900 bg-zinc-900 text-white shadow"
+                  : "border-zinc-200 bg-white text-zinc-800 hover:bg-zinc-100"
+              }`}
             >
               {g.toUpperCase()}
             </button>

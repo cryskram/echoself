@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import Image from "next/image";
 import ImageUpload from "@/components/ImageUpload";
 import GenrePicker from "@/components/GenrePicker";
 
@@ -35,44 +36,70 @@ export default function Home() {
   }
 
   return (
-    <main className="flex min-h-screen items-center justify-center bg-linear-to-br from-black via-zinc-900 to-black p-6 text-white">
-      <div className="w-full max-w-xl space-y-6">
-        <div className="text-center">
-          <h1 className="text-4xl font-bold tracking-tight">EchoSelf</h1>
-          <p className="mt-2 text-zinc-400">See yourself. Hear yourself.</p>
+    <main className="flex min-h-screen items-center justify-center bg-linear-to-br from-zinc-200 via-white to-zinc-200 p-6 text-zinc-900">
+      <div className="w-full max-w-xl space-y-8">
+        <div className="flex justify-center gap-8">
+          <Image
+            src="/images/apscon.png"
+            alt="APSCon"
+            width={90}
+            height={45}
+            className="object-contain"
+          />
+          <Image
+            src="/images/sc.png"
+            alt="Signal Processing Society"
+            width={120}
+            height={64}
+            className="object-contain"
+          />
         </div>
 
-        <div className="space-y-6 rounded-2xl bg-zinc-900/70 p-6 shadow-xl backdrop-blur">
+        <div className="text-center">
+          <h1 className="text-4xl font-bold tracking-tight uppercase">
+            Echo
+            <span className="rounded-xl bg-zinc-900 px-2 py-0.5 text-white">
+              Self
+            </span>
+          </h1>
+          <p className="mt-2 text-zinc-600">See yourself. Hear yourself.</p>
+        </div>
+
+        <div className="space-y-6 rounded-2xl bg-white p-6 shadow-xl ring-1 ring-zinc-200">
           <ImageUpload onSelect={setImage} />
           <GenrePicker value={genre} onPick={setGenre} />
 
           {genre && (
-            <p className="text-center text-sm text-zinc-400">
+            <p className="text-center text-sm text-zinc-500">
               Selected:{" "}
-              <span className="font-medium text-white">
+              <span className="font-medium text-zinc-900">
                 {genre.toUpperCase()}
               </span>
             </p>
           )}
 
           <button
-            disabled={loading}
+            disabled={loading || !genre}
             onClick={generate}
             className={`w-full rounded-xl py-3 font-semibold transition ${
               loading || !genre
-                ? "cursor-not-allowed bg-zinc-700 text-zinc-400"
-                : "bg-white text-black hover:bg-zinc-200"
-            } `}
+                ? "cursor-not-allowed bg-zinc-200 text-zinc-400"
+                : "bg-zinc-900 text-white hover:bg-zinc-800"
+            }`}
           >
-            {loading ? "Creating your vibe…" : "Generate My Echo"}
+            {loading ? "Creating your echo…" : "Generate My Echo"}
           </button>
 
           {loading && (
-            <p className="animate-pulse text-center text-sm text-zinc-400">
-              Generating album art & music locally…
+            <p className="animate-pulse text-center text-sm text-zinc-500">
+              Generating album art & music…
             </p>
           )}
         </div>
+
+        <p className="text-center text-xs text-zinc-400">
+          Live AI demo · Conference preview build
+        </p>
       </div>
     </main>
   );

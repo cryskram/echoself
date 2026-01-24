@@ -1,10 +1,7 @@
 "use client";
 
 import { useSearchParams } from "next/navigation";
-
-const CLOUDINARY_IMAGE_BASE = `https://res.cloudinary.com/${process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME}/image/upload/echoself`;
-
-const CLOUDINARY_AUDIO_BASE = `https://res.cloudinary.com/${process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME}/video/upload/echoself/music`;
+import Image from "next/image";
 
 export default function ShareClient() {
   const params = useSearchParams();
@@ -15,34 +12,49 @@ export default function ShareClient() {
 
   if (!img || !genre) return null;
 
-  if (!/^[a-zA-Z0-9-_]+\.(png|jpg|jpeg)$/.test(img)) return null;
-  if (audio && !/^[a-zA-Z0-9-_]+\.wav$/.test(audio)) return null;
-
-  const imageUrl = `${CLOUDINARY_IMAGE_BASE}/${img}`;
-  const audioUrl = audio ? `${CLOUDINARY_AUDIO_BASE}/${genre}/${audio}` : null;
+  const imageUrl = `https://res.cloudinary.com/${process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME}/image/upload/echoself/${img}`;
+  const audioUrl = audio
+    ? `https://res.cloudinary.com/${process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME}/video/upload/echoself/music/${genre}/${audio}`
+    : null;
 
   return (
-    <main className="flex min-h-screen items-center justify-center bg-black p-6 text-white">
-      <div className="max-w-md space-y-4 text-center">
-        <h1 className="text-2xl font-semibold">EchoSelf</h1>
+    <main className="flex min-h-screen items-center justify-center bg-zinc-50 p-6">
+      <div className="w-full max-w-md space-y-4 rounded-2xl bg-white p-6 text-center shadow-lg ring-1 ring-zinc-200">
+        <div className="flex justify-center gap-6 pb-2">
+          <Image src="/images/apscon.png" alt="APSCon" width={72} height={36} />
+          <Image src="/images/sc.png" alt="SC" width={120} height={64} />
+        </div>
+
+        <h1 className="text-2xl font-semibold text-zinc-900 uppercase">
+          Echo
+          <span className="rounded-xl bg-zinc-900 px-2 py-1 text-white">
+            Self
+          </span>
+        </h1>
 
         <img
           src={imageUrl}
           alt="Shared album art"
-          className="rounded-xl shadow-xl"
+          className="mx-auto rounded-xl shadow-md"
         />
 
-        {audioUrl && <audio controls src={audioUrl} className="w-full" />}
+        {audioUrl && (
+          <audio
+            controls
+            src={audioUrl}
+            className="w-full rounded-xl border border-zinc-200 bg-zinc-100 p-2"
+          />
+        )}
 
         <a
           href={imageUrl}
           download
-          className="block rounded-xl bg-white py-2 font-semibold text-black transition hover:bg-zinc-200"
+          className="block rounded-xl bg-zinc-900 py-2 font-semibold text-white transition hover:bg-zinc-800"
         >
           Download Image
         </a>
 
-        <p className="text-xs text-zinc-400">Generated using EchoSelf</p>
+        <p className="text-xs text-zinc-500">Generated using EchoSelf</p>
       </div>
     </main>
   );

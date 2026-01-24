@@ -53,9 +53,7 @@ export default function ImageUpload({
 
   async function handleFile(file: File) {
     const resized = await resizeImage(file);
-
     if (preview) URL.revokeObjectURL(preview);
-
     const url = URL.createObjectURL(resized);
     setPreview(url);
     onSelect(resized);
@@ -83,8 +81,8 @@ export default function ImageUpload({
           }}
           className={`flex cursor-pointer flex-col items-center justify-center rounded-2xl border-2 border-dashed p-8 text-center transition ${
             dragging
-              ? "border-white bg-white/10"
-              : "border-zinc-700 hover:border-zinc-500"
+              ? "border-zinc-900 bg-zinc-100"
+              : "border-zinc-300 hover:border-zinc-400"
           }`}
         >
           <input
@@ -97,10 +95,10 @@ export default function ImageUpload({
             }}
           />
 
-          <p className="font-medium text-white">
+          <p className="font-medium text-zinc-800">
             Click to upload or drag & drop
           </p>
-          <p className="mt-1 text-sm text-zinc-400">
+          <p className="mt-1 text-sm text-zinc-500">
             JPG / PNG · auto-optimized
           </p>
         </label>
@@ -118,7 +116,7 @@ export default function ImageUpload({
 
           <button
             onClick={reset}
-            className="absolute -top-3 -right-3 rounded-full bg-black/80 px-3 py-1 text-xs text-white backdrop-blur hover:bg-black"
+            className="absolute -top-3 -right-3 rounded-full bg-zinc-900 px-3 py-1 text-xs font-medium text-white shadow hover:bg-zinc-800"
           >
             Change
           </button>

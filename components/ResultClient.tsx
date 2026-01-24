@@ -2,10 +2,7 @@
 
 import { useSearchParams } from "next/navigation";
 import { QRCodeSVG } from "qrcode.react";
-
-const CLOUDINARY_IMAGE_BASE = `https://res.cloudinary.com/${process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME}/image/upload/echoself`;
-
-const CLOUDINARY_AUDIO_BASE = `https://res.cloudinary.com/${process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME}/video/upload/echoself/music`;
+import Image from "next/image";
 
 export default function ResultClient() {
   const params = useSearchParams();
@@ -16,42 +13,53 @@ export default function ResultClient() {
 
   if (!img || !genre) return null;
 
-  if (!/^[a-zA-Z0-9-_]+\.(png|jpg|jpeg)$/.test(img)) return null;
-  if (audio && !/^[a-zA-Z0-9-_]+\.wav$/.test(audio)) return null;
-
-  const imageUrl = `${CLOUDINARY_IMAGE_BASE}/${img}`;
-  const audioUrl = audio ? `${CLOUDINARY_AUDIO_BASE}/${genre}/${audio}` : null;
+  const imageUrl = `https://res.cloudinary.com/${process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME}/image/upload/echoself/${img}`;
+  const audioUrl = audio
+    ? `https://res.cloudinary.com/${process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME}/video/upload/echoself/music/${genre}/${audio}`
+    : null;
 
   const shareUrl =
     typeof window !== "undefined"
-      ? `${window.location.origin}/share?img=${encodeURIComponent(
-          img
-        )}&genre=${encodeURIComponent(genre)}${
-          audio ? `&audio=${encodeURIComponent(audio)}` : ""
-        }`
+      ? `${window.location.origin}/share?img=${img}&genre=${genre}&audio=${audio ?? ""}`
       : "";
 
   return (
-    <main className="flex min-h-screen items-center justify-center bg-black p-6 text-white">
-      <div className="max-w-md space-y-6 text-center">
-        <h2 className="text-2xl font-semibold">Your Echo</h2>
+    <main className="flex min-h-screen items-center justify-center bg-zinc-50 p-6">
+      <div className="w-full max-w-md space-y-6 rounded-2xl bg-white p-6 text-center shadow-lg ring-1 ring-zinc-200">
+        <div className="flex justify-center gap-6">
+          <Image src="/images/apscon.png" alt="APSCon" width={80} height={40} />
+          <Image src="/images/sc.png" alt="SC" width={120} height={64} />
+        </div>
+
+        <h1 className="text-2xl font-bold text-zinc-900 uppercase">
+          Echo
+          <span className="rounded-xl bg-zinc-900 px-2 py-1 text-white">
+            Self
+          </span>
+        </h1>
 
         <img
           src={imageUrl}
           alt="Generated album art"
-          className="rounded-2xl shadow-xl"
+          className="mx-auto rounded-2xl shadow-md"
         />
 
-        {audioUrl && <audio controls src={audioUrl} className="w-full" />}
+        {audioUrl && (
+          <audio
+            controls
+            src={audioUrl}
+            className="w-full rounded-xl border border-zinc-200 bg-zinc-100 p-2"
+          />
+        )}
 
         <div className="flex flex-col items-center gap-2 pt-4">
           <QRCodeSVG
             value={shareUrl}
             size={160}
-            bgColor="#000"
-            fgColor="#fff"
+            bgColor="#ffffff"
+            fgColor="#000000"
           />
-          <p className="text-xs text-zinc-400">Scan to view & download</p>
+          <p className="text-xs text-zinc-500">Scan to view & download</p>
         </div>
       </div>
     </main>
