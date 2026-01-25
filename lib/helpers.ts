@@ -86,7 +86,7 @@ PHOTOGRAPHY SPECS:
 - NO cartoon, NO illustration, NO 3D render—must look like a real photograph.
 
 TYPOGRAPHY:
-- Overlay the word "${genre.toUpperCase()}" in the center-top or center-bottom.
+- Overlay the word "${genre.toUpperCase()}" in the center-bottom.
 - Use clean, bold, modern, and premium cinematic font styles.
 - The text must be spelled correctly and look like a real music album title.
 `;
