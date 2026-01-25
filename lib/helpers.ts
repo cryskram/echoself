@@ -11,152 +11,84 @@ export const GENRES = [
 
 const GENRE_STYLES: Record<string, string> = {
   rock: `
-    gritty modern rock album cover,
-    moody concert-stage atmosphere,
-    dark textured background with subtle grain,
-    leather or denim clothing with rugged details,
-    dramatic directional lighting,
-    high contrast shadows,
-    rebellious, intense, raw energy,
-    bold masculine or edgy aesthetic
+    The person is a gritty Rock Protagonist on a dark stage. 
+    Wearing: A worn black leather jacket and metal accessories.
+    Environment: Moody arena backdrop with hazy stage smoke and dramatic red/blue rim lighting.
+    Vibe: Rebellious, high-contrast, raw concert energy.
   `,
 
   edm: `
-    futuristic electronic music album cover,
-    neon-lit club or abstract digital environment,
-    vibrant cyan, magenta, purple lighting,
-    LED glow, light streaks, subtle motion blur,
-    modern streetwear or minimal tech fashion,
-    high saturation, glossy finish,
-    energetic, night-life driven atmosphere
+    The person is a Headline DJ at a futuristic festival. 
+    Wearing: Iridescent metallic streetwear or reflective tech-apparel.
+    Environment: Cyberpunk club atmosphere with neon cyan and magenta laser beams and LED screens.
+    Vibe: High-energy, digital, electric night-life.
   `,
 
   chill: `
-    chill lo-fi album cover aesthetic,
-    soft minimalist background,
-    muted pastel color palette,
-    cozy oversized clothing or casual wear,
-    warm diffused lighting,
-    relaxed body language,
-    dreamy, introspective, calm mood,
-    gentle cinematic softness
+    The person is a Lo-Fi artist in a peaceful, sun-drenched room. 
+    Wearing: An oversized chunky knit sweater or cozy minimalist loungewear.
+    Environment: Soft bokeh background with indoor plants and warm golden hour light through a window.
+    Vibe: Dreamy, calm, introspective, soft focus.
   `,
 
   jazz: `
-    classic jazz album cover,
-    intimate vintage jazz club environment,
-    warm amber and golden lighting,
-    elegant formal or semi-formal attire,
-    timeless cinematic composition,
-    subtle film grain,
-    sophisticated, soulful, late-night atmosphere
+    The person is a sophisticated Jazz Virtuoso in a late-night club. 
+    Wearing: A sharp tailored charcoal suit or a velvet evening gown.
+    Environment: A dim-lit vintage lounge with a single amber spotlight and a blurred piano in the background.
+    Vibe: Soulful, elegant, "Film Noir" aesthetic.
   `,
 
   hindustani: `
-    hindustani classical album cover,
-    serene and meditative atmosphere,
-    rich earthy tones (deep browns, maroon, gold),
-    traditional north indian attire (kurta, shawl, dupatta inspired styling),
-    soft warm stage lighting,
-    spiritual and contemplative mood,
-    dignified classical elegance,
-    refined cultural authenticity
+    The person is a Classical Maestro of Hindustani music. 
+    Wearing: A premium white silk Kurta with a heavy embroidered shawl.
+    Environment: A serene, ancient stone palace courtyard at dawn with soft ethereal mist.
+    Vibe: Meditative, spiritual, legendary, timeless.
   `,
 
   carnatic: `
-    carnatic classical album cover,
-    south indian classical concert aesthetic,
-    bright yet warm color palette,
-    traditional south indian attire (silk textures, veshti or saree inspired styling),
-    temple or heritage auditorium inspired backdrop,
-    rhythmic, disciplined, energetic mood,
-    cultural richness with refined precision
+    The person is a Carnatic Music Legend. 
+    Wearing: Traditional Kanchipuram silk with gold zari borders and temple-style gold jewelry.
+    Environment: A grand South Indian heritage hall decorated with jasmine garlands and glowing brass lamps.
+    Vibe: Culturally powerful, disciplined, rhythmic, vibrant.
   `,
 
   indian: `
-    modern indian fusion album cover,
-    culturally rooted yet contemporary aesthetic,
-    warm rich colors inspired by indian art (indigo, ivory, gold, maroon),
-    elegant indo-fusion clothing,
-    handcrafted fabric textures,
-    cinematic lighting with emotional depth,
-    calm, expressive, soulful atmosphere,
-    premium cultural elegance
+    The person is a modern Indie-Fusion artist. 
+    Wearing: A stylish fusion of a denim jacket over a traditional long kurta.
+    Environment: A contemporary art studio with warm fairy lights and textured textile backdrops.
+    Vibe: Soulful, creative, modern-ethnic "Hero" look.
   `,
 
   bollywood: `
-    cinematic Bollywood movie poster aesthetic,
-    modern Indian film styling,
-    dramatic cinematic lighting with soft glow,
-    expressive emotional mood,
-    stylish contemporary Indian outfit (movie-style, not traditional concert wear),
-    rich colors with warm highlights,
-    shallow depth of field,
-    glamorous yet grounded look,
-    polished commercial film production feel
-    influenced by modern Indian cinema and mainstream film posters
+    The person is a glamorous Bollywood Cinema Superstar. 
+    Wearing: A dramatic, flying silk dupatta or a high-fashion designer Sherwani.
+    Environment: A breathtaking Himalayan mountain peak or an opulent grand palace balcony.
+    Vibe: Larger-than-life, romantic, epic cinematic hero, "Yash Chopra" style glow.
   `,
 };
 
 export const imagePrompt = (genre: string) => `
-The uploaded image is a FACE IDENTITY REFERENCE.
+The person in the uploaded image is the SOLE SUBJECT of this photo. 
 
-CRITICAL IDENTITY RULES (HIGHEST PRIORITY):
-- The generated person must be IDENTICAL to the uploaded person
-- Preserve exact facial structure, proportions, and bone structure
-- Preserve eye shape, nose shape, lip shape, jawline, and cheekbones
-- Preserve skin tone, age, gender, and ethnicity
-- This is NOT a new person
-- This is NOT a reinterpretation
-- This is NOT a look-alike
-- It is the SAME person photographed in a different scene
+FAITHFUL IDENTITY PRESERVATION:
+- This is a photorealistic transformation of the person in the reference photo.
+- Maintain the EXACT facial structure, eye shape, nose, and jawline of the person in the photo.
+- Do not change their ethnicity, age, or gender.
+- They are the "Main Character" or "Hero" of this album cover.
 
-FORBIDDEN CHANGES:
-- Do NOT redesign or beautify the face
-- Do NOT alter facial proportions or symmetry
-- Do NOT stylize the face
-- Do NOT exaggerate features
-- Do NOT add heavy makeup that changes face shape
-
-HAIR RULES:
-- Hairstyle must remain very similar to the uploaded image
-- Same hair length and hairline
-- Only minor styling adjustments allowed
-
-ALLOWED CHANGES (DO NOT AFFECT FACE):
-- Background
-- Clothing
-- Environment
-- Lighting and color palette
-
-Create a professional ALBUM COVER PORTRAIT.
-
-STYLE DIRECTION:
+GENRE THEME & WARDROBE:
 ${GENRE_STYLES[genre]}
 
-TEXT ON IMAGE:
-- Include the genre name "${genre.toUpperCase()}"
-- Clean, bold album-cover typography
-- Positioned at top or bottom of the image
-- High contrast and clearly readable
-- Modern, genre-appropriate font
-- Correct spelling
-- NO other text
+PHOTOGRAPHY SPECS:
+- Professional album cover photography.
+- Sharp focus on the face, shallow depth of field (blurred background).
+- Shot on 85mm lens, f/1.8, 8k resolution, cinematic lighting.
+- NO cartoon, NO illustration, NO 3D render—must look like a real photograph.
 
-PHOTOGRAPHY:
-- photorealistic
-- cinematic studio lighting
-- shallow depth of field
-- sharp focus on face
-- ultra-detailed
-- award-winning album cover quality
-
-FINAL CONSTRAINTS:
-- Face must look photorealistic and consistent with the original photo
-- No illustration, no cartoon, no anime, no painterly style
-- No logos
-- No watermarks
-- No extra text
+TYPOGRAPHY:
+- Overlay the word "${genre.toUpperCase()}" in the center-top or center-bottom.
+- Use clean, bold, modern, and premium cinematic font styles.
+- The text must be spelled correctly and look like a real music album title.
 `;
 
 // export const musicPrompt = (genre: string) =>

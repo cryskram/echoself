@@ -8,9 +8,20 @@ export async function uploadToCloudinary(base64: string) {
   const timestamp = Math.floor(Date.now() / 1000);
   const publicId = `echoself/${crypto.randomUUID()}`;
 
+  const transformation = [
+    "l_echoself:banner",
+    "w_420",
+    "c_fit",
+    "g_north_east",
+    "x_30",
+    "y_30",
+  ].join(",");
+
   const signature = crypto
     .createHash("sha1")
-    .update(`public_id=${publicId}&timestamp=${timestamp}${apiSecret}`)
+    .update(
+      `public_id=${publicId}&timestamp=${timestamp}&transformation=${transformation}${apiSecret}`
+    )
     .digest("hex");
 
   const form = new FormData();
@@ -18,6 +29,7 @@ export async function uploadToCloudinary(base64: string) {
   form.append("api_key", apiKey);
   form.append("timestamp", String(timestamp));
   form.append("public_id", publicId);
+  form.append("transformation", transformation);
   form.append("signature", signature);
 
   const res = await fetch(
@@ -31,6 +43,7 @@ export async function uploadToCloudinary(base64: string) {
   const json = await res.json();
 
   if (!json.secure_url) {
+    console.error("Cloudinary error:", json);
     throw new Error("Cloudinary upload failed");
   }
 
