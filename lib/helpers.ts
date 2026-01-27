@@ -9,87 +9,128 @@ export const GENRES = [
   "bollywood",
 ] as const;
 
-const GENRE_STYLES: Record<string, string> = {
-  rock: `
-    The person is a gritty Rock Protagonist on a dark stage. 
-    Wearing: A worn black leather jacket and metal accessories.
-    Environment: Moody arena backdrop with hazy stage smoke and dramatic red/blue rim lighting.
-    Vibe: Rebellious, high-contrast, raw concert energy.
-  `,
-
-  edm: `
-    The person is a Headline DJ at a futuristic festival. 
-    Wearing: Iridescent metallic streetwear or reflective tech-apparel.
-    Environment: Cyberpunk club atmosphere with neon cyan and magenta laser beams and LED screens.
-    Vibe: High-energy, digital, electric night-life.
-  `,
-
-  chill: `
-    The person is a Lo-Fi artist in a peaceful, sun-drenched room. 
-    Wearing: An oversized chunky knit sweater or cozy minimalist loungewear.
-    Environment: Soft bokeh background with indoor plants and warm golden hour light through a window.
-    Vibe: Dreamy, calm, introspective, soft focus.
-  `,
-
-  jazz: `
-    The person is a sophisticated Jazz Virtuoso in a late-night club. 
-    Wearing: A sharp tailored charcoal suit or a velvet evening gown.
-    Environment: A dim-lit vintage lounge with a single amber spotlight and a blurred piano in the background.
-    Vibe: Soulful, elegant, "Film Noir" aesthetic.
-  `,
-
-  hindustani: `
-    The person is a Classical Maestro of Hindustani music. 
-    Wearing: A premium white silk Kurta with a heavy embroidered shawl.
-    Environment: A serene, ancient stone palace courtyard at dawn with soft ethereal mist.
-    Vibe: Meditative, spiritual, legendary, timeless.
-  `,
-
-  carnatic: `
-    The person is a Carnatic Music Legend. 
-    Wearing: Traditional Kanchipuram silk with gold zari borders and temple-style gold jewelry.
-    Environment: A grand South Indian heritage hall decorated with jasmine garlands and glowing brass lamps.
-    Vibe: Culturally powerful, disciplined, rhythmic, vibrant.
-  `,
-
-  indian: `
-    The person is a modern Indie-Fusion artist. 
-    Wearing: A stylish fusion of a denim jacket over a traditional long kurta.
-    Environment: A contemporary art studio with warm fairy lights and textured textile backdrops.
-    Vibe: Soulful, creative, modern-ethnic "Hero" look.
-  `,
-
-  bollywood: `
-    The person is a glamorous Bollywood Cinema Superstar. 
-    Wearing: A dramatic, flying silk dupatta or a high-fashion designer Sherwani.
-    Environment: A breathtaking Himalayan mountain peak or an opulent grand palace balcony.
-    Vibe: Larger-than-life, romantic, epic cinematic hero, "Yash Chopra" style glow.
-  `,
+type GenreDetails = {
+  scene: string;
+  typography: string;
 };
 
-export const imagePrompt = (genre: string) => `
-The person in the uploaded image is the SOLE SUBJECT of this photo. 
+const ATTIRE_CONFIG: Record<string, { male: string; female: string }> = {
+  carnatic: {
+    male: "a professional South Indian Pattu Veshti with a gold-bordered Angavastram fabric wrapped over the shoulder and a formal high-neck shirt.",
+    female:
+      "a conservative, high-neck traditional Kanchipuram silk ensemble with elaborate gold patterns and cultural temple jewelry.",
+  },
+  hindustani: {
+    male: "a formal high-collar white Kurta-Pajama set with a traditional patterned fabric wrap or shawl.",
+    female:
+      "a formal, fully-covered traditional Anarkali garment with a cultural shoulder wrap.",
+  },
+  bollywood: {
+    male: "an opulent, long-form ceremonial designer Sherwani with structured embroidery and a formal collar.",
+    female:
+      "a high-fashion, fully-lined designer evening gown with a long, elegant scarf accessory.",
+  },
+  jazz: {
+    male: "a professional three-piece charcoal suit with a crisp button-down shirt and tie.",
+    female:
+      "a conservative, floor-length velvet evening gown with long sleeves.",
+  },
+  rock: {
+    male: "a structured black leather jacket over a graphic band tee and dark denim.",
+    female:
+      "a structured black leather jacket over a graphic band tee and dark denim.",
+  },
+  edm: {
+    male: "a tech-wear iridescent metallic bomber jacket with a clean black t-shirt.",
+    female:
+      "a tech-wear iridescent metallic bomber jacket with a clean black t-shirt.",
+  },
+  chill: {
+    male: "a thick textured corduroy jacket and a formal flannel shirt.",
+    female: "an oversized, thick chunky knit sweater with a high collar.",
+  },
+  indian: {
+    male: "a modern designer denim jacket layered over a long, structured modern kurta.",
+    female:
+      "a modern designer denim jacket layered over a long, structured modern kurta.",
+  },
+};
 
-FAITHFUL IDENTITY PRESERVATION:
-- This is a photorealistic transformation of the person in the reference photo.
-- Maintain the EXACT facial structure, eye shape, nose, and jawline of the person in the photo.
-- Do not change their ethnicity, age, or gender.
-- They are the "Main Character" or "Hero" of this album cover.
+const GENRE_STYLES: Record<string, GenreDetails> = {
+  rock: {
+    scene:
+      "Hyper-dynamic, gritty album art. Wide-legged power stance. Environment: dystopian city ruin at twilight with cinematic smoke.",
+    typography:
+      "A jagged, metallic style logo with chrome textures, positioned at the top.",
+  },
+  edm: {
+    scene:
+      "Retro-futuristic Synthwave. Confident pose surrounded by floating geometric cubes and neon light trails.",
+    typography:
+      "A retro 80s chrome and neon gradient script font, positioned at the top.",
+  },
+  chill: {
+    scene:
+      "Organic cinematic film photography. Sitting on a stool in a vast golden field at sunset.",
+    typography:
+      "An elegant, flowing handwritten script font, centered at the top.",
+  },
+  jazz: {
+    scene:
+      "Luxurious vintage aesthetic. Seated in a plush velvet armchair in a smoky art-deco lounge.",
+    typography: "A bold, retro-styled brass serif font, positioned at the top.",
+  },
+  hindustani: {
+    scene:
+      "Ethereal, spiritual style. Seated cross-legged in a meditative trance in an ancient stone courtyard at dawn.",
+    typography:
+      "A calligraphic, traditional brush font in gold, positioned at the bottom.",
+  },
+  carnatic: {
+    scene:
+      "Vibrant cultural photography. Passionate performance with a traditional instrument in a decorated temple sanctum.",
+    typography:
+      "An ornamental South Indian style font, centered at the bottom.",
+  },
+  indian: {
+    scene:
+      "Modern indie-fusion aesthetic. Candid-style portrait leaning against a textured wall with fairy lights.",
+    typography: "A modern, clean, sans-serif font, positioned at the bottom.",
+  },
+  bollywood: {
+    scene:
+      "Larger-than-life epic movie poster. Heroic pose on a grand palace balcony overlooking mountains at sunset.",
+    typography:
+      "A grand, 3D metallic blocky font, positioned at the bottom center.",
+  },
+};
 
-GENRE THEME & WARDROBE:
-${GENRE_STYLES[genre]}
+export const imagePrompt = (
+  genre: string,
+  gender: "male" | "female" = "male"
+) => {
+  const style = GENRE_STYLES[genre];
+  const attire =
+    ATTIRE_CONFIG[genre]?.[gender] || ATTIRE_CONFIG["indian"][gender];
 
-PHOTOGRAPHY SPECS:
-- Professional album cover photography.
-- Sharp focus on the face, shallow depth of field (blurred background).
-- Shot on 85mm lens, f/1.8, 8k resolution, cinematic lighting.
-- NO cartoon, NO illustration, NO 3D render—must look like a real photograph.
+  return `
+### SINGLE IMAGE ENFORCEMENT ###
+- GENERATE EXACTLY ONE (1) IMAGE. NO GRIDS. NO MULTI-SHOTS.
+- This is a professional full-bleed album cover.
 
-TYPOGRAPHY:
-- Overlay the word "${genre.toUpperCase()}" in the center-bottom.
-- Use clean, bold, modern, and premium cinematic font styles.
-- The text must be spelled correctly and look like a real music album title.
+### IDENTITY LOCK ###
+- Maintain the EXACT face, jawline, and eyes of the person in the reference photo.
+- The subject's gender is ${gender}; they must remain ${gender}.
+- 1:1 facial structure preservation is mandatory.
+
+### WARDROBE & SCENE ###
+- CLOTHING: The subject is wearing ${attire}.
+- VIBE: ${style.scene}
+- The clothing must be professional, formal, and fully-lined.
+
+### PHOTOGRAPHY & TYPOGRAPHY ###
+- Sharp focus on face, cinematic lighting, 8k resolution feel.
+- Overlay the title "${genre.toUpperCase()}" using this style: ${style.typography}
+- The text must look like professionally designed graphic art.
 `;
-
-// export const musicPrompt = (genre: string) =>
-//   `Instrumental ${genre} music, studio quality`;
+};
