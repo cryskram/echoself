@@ -2,21 +2,16 @@ import crypto from "crypto";
 
 export async function uploadToCloudinary(base64: string) {
   const cloudName = process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME!;
-  const apiSecret = process.env.CLOUDINARY_API_SECRET!;
   const apiKey = process.env.CLOUDINARY_API_KEY!;
+  const apiSecret = process.env.CLOUDINARY_API_SECRET!;
 
   const timestamp = Math.floor(Date.now() / 1000);
   const publicId = `echoself/${crypto.randomUUID()}`;
 
   const transformation = [
-    "b_black",
-    "c_pad,h_1280,w_1024",
-    "g_south",
-    "l_echoself:banner",
-    "w_600",
-    "c_fit",
-    "y_80",
-  ].join(",");
+    "l_echoself:logo-left,w_120,c_fit,g_north_west,x_24,y_24",
+    "l_echoself:logo-right,w_120,c_fit,g_north_east,x_24,y_24",
+  ].join("/");
 
   const signature = crypto
     .createHash("sha1")
@@ -42,5 +37,11 @@ export async function uploadToCloudinary(base64: string) {
   );
 
   const json = await res.json();
+
+  if (!json.secure_url) {
+    console.error("Cloudinary error:", json);
+    throw new Error("Cloudinary upload failed");
+  }
+
   return json.secure_url as string;
 }
