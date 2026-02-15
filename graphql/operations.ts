@@ -11,9 +11,18 @@ export const GET_USERS = gql`
 `;
 
 export const CONSUME_GENERATION = gql`
-  mutation ConsumeGeneration($regid: String!) {
-    consumeGeneration(regid: $regid) {
-      regid
+  mutation ConsumeGeneration($regId: String!) {
+    consumeGeneration(regId: $regId) {
+      regId
+      generations
+    }
+  }
+`;
+
+export const RESET_GENERATIONS = gql`
+  mutation ResetGenerations($regId: String!) {
+    resetGenerations(regId: $regId) {
+      regId
       generations
     }
   }

@@ -9,9 +9,11 @@ import GenrePicker from "@/components/GenrePicker";
 import Modal from "@/components/Modal";
 
 import { GET_USERS, CONSUME_GENERATION } from "@/graphql/operations";
+import AdminResetPanel from "@/components/AdminResetPanel";
+import RegIdDropdown from "@/components/RegIdDropdown";
 
 type User = {
-  regid: string;
+  regId: string;
   name: string;
   generations: number;
 };
@@ -22,7 +24,7 @@ type GetUsersQuery = {
 
 type ConsumeGenerationMutation = {
   consumeGeneration: {
-    regid: string;
+    regId: string;
     generations: number;
   };
 };
@@ -45,7 +47,7 @@ export default function Home() {
     useMutation<ConsumeGenerationMutation>(CONSUME_GENERATION);
 
   const users = data?.users ?? [];
-  const user = users.find((u) => u.regid === selectedRegId);
+  const user = users.find((u) => u.regId === selectedRegId);
 
   async function generate() {
     if (!user) {
@@ -70,7 +72,7 @@ export default function Home() {
 
     try {
       await consumeGeneration({
-        variables: { regid: user.regid },
+        variables: { regId: user.regId },
         refetchQueries: [GET_USERS],
       });
 
@@ -85,16 +87,25 @@ export default function Home() {
 
       const data = await res.json();
 
-      if (!data.img || !data.audio || !data.genre) {
-        throw new Error("Invalid generation response");
+      if (res.status === 402 && data.error === "BILLING_LIMIT_REACHED") {
+        setModal({
+          title: "AI Credits Exhausted",
+          message:
+            "The AI generation credits for this booth have been fully used. Please contact the volunteer for assistance.",
+        });
+        return;
+      }
+
+      if (!res.ok) {
+        throw new Error(data?.message || "Generation failed");
       }
 
       window.location.href = `/result?img=${data.img}&audio=${data.audio}&genre=${data.genre}`;
-    } catch {
+    } catch (error: any) {
       setModal({
         title: "Something went wrong",
         message:
-          "We couldn’t generate your Echo right now. Please try again or contact the volunteer.",
+          "We couldn't generate your Echo right now. Please try again or contact the volunteer.",
       });
     }
   }
@@ -120,19 +131,12 @@ export default function Home() {
         </div>
 
         <div className="space-y-6 rounded-2xl bg-white p-6 shadow-xl ring-1 ring-zinc-200">
-          <select
-            className="w-full rounded-xl border p-3"
-            disabled={usersLoading}
+          <RegIdDropdown
+            users={users}
             value={selectedRegId}
-            onChange={(e) => setSelectedRegId(e.target.value)}
-          >
-            <option value="">Select Registration ID</option>
-            {users.map((u) => (
-              <option key={u.regid} value={u.regid}>
-                {u.regid} · {u.name}
-              </option>
-            ))}
-          </select>
+            onChange={setSelectedRegId}
+            disabled={usersLoading}
+          />
 
           {user && (
             <p className="text-center text-sm text-zinc-500">
@@ -160,8 +164,12 @@ export default function Home() {
 
           {exhausted && (
             <p className="text-center text-sm text-red-500">
-              You’ve reached the maximum of 4 generations.
+              You've reached the maximum of 4 generations.
             </p>
+          )}
+
+          {exhausted && user && (
+            <AdminResetPanel regId={user.regId} name={user.name} />
           )}
         </div>
 

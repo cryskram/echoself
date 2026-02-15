@@ -21,4 +21,13 @@ export const Mutations = {
       },
     });
   },
+
+  resetGenerations: async (_: unknown, { regId }: { regId: string }) => {
+    return await prisma.user.update({
+      where: { regId },
+      data: {
+        generations: 0,
+      },
+    });
+  },
 };

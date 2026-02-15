@@ -15,5 +15,6 @@ export const typeDefs = gql`
 
   type Mutation {
     consumeGeneration(regId: String!): User
+    resetGenerations(regId: String!): User
   }
 `;

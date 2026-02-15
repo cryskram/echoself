@@ -6,17 +6,24 @@ const openai = new OpenAI({
 });
 
 export async function generateImage(file: File, prompt: string) {
-  const res = await openai.images.edit({
-    model: "gpt-image-1",
-    image: file,
-    prompt,
-    size: "1024x1024",
-  });
+  try {
+    const res = await openai.images.edit({
+      model: "gpt-image-1",
+      image: file,
+      prompt,
+      size: "1024x1024",
+    });
 
-  const base64 = res.data?.[0]?.b64_json;
-  if (!base64) {
-    throw new Error("No image returned from OpenAI");
+    const base64 = res.data?.[0]?.b64_json;
+    if (!base64) {
+      throw new Error("No image returned from OpenAI");
+    }
+
+    return await uploadToCloudinary(base64);
+  } catch (error: any) {
+    if (error.code === "billing_hard_limit_reached") {
+      throw new Error("OPENAI_BILLING_LIMIT");
+    }
+    throw error;
   }
-
-  return await uploadToCloudinary(base64);
 }
