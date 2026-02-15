@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { IBM_Plex_Sans } from "next/font/google";
 import "./globals.css";
+import { Providers } from "./providers";
 
 const font = IBM_Plex_Sans({ subsets: ["latin"] });
 
@@ -41,7 +42,7 @@ export default function RootLayout({
       <body
         className={`${font.className} min-h-screen bg-zinc-50 text-zinc-900 antialiased`}
       >
-        {children}
+        <Providers>{children}</Providers>
       </body>
     </html>
   );
