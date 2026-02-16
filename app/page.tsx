@@ -11,6 +11,7 @@ import Modal from "@/components/Modal";
 import { GET_USERS, CONSUME_GENERATION } from "@/graphql/operations";
 import AdminResetPanel from "@/components/AdminResetPanel";
 import RegIdDropdown from "@/components/RegIdDropdown";
+import RegIdAutocomplete from "@/components/RegIdAutocomplete";
 
 type User = {
   regId: string;
@@ -131,7 +132,7 @@ export default function Home() {
         </div>
 
         <div className="space-y-6 rounded-2xl bg-white p-6 shadow-xl ring-1 ring-zinc-200">
-          <RegIdDropdown
+          <RegIdAutocomplete
             users={users}
             value={selectedRegId}
             onChange={setSelectedRegId}

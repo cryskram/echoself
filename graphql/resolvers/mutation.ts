@@ -1,6 +1,6 @@
 import { prisma } from "@/lib/prisma";
 
-export const Mutations = {
+export const Mutation = {
   consumeGeneration: async (_: unknown, { regId }: { regId: string }) => {
     const user = await prisma.user.findUnique({
       where: { regId },
@@ -28,6 +28,18 @@ export const Mutations = {
       data: {
         generations: 0,
       },
+    });
+  },
+
+  createUser: async (
+    _: unknown,
+    { regId, name }: { regId: string; name: string }
+  ) => {
+    console.log("Creating user with regId:", regId, "and name:", name);
+    return await prisma.user.upsert({
+      where: { regId },
+      update: { name },
+      create: { regId, name, generations: 0 },
     });
   },
 };
