@@ -10,7 +10,6 @@ import Modal from "@/components/Modal";
 
 import { GET_USERS, CONSUME_GENERATION } from "@/graphql/operations";
 import AdminResetPanel from "@/components/AdminResetPanel";
-import RegIdDropdown from "@/components/RegIdDropdown";
 import RegIdAutocomplete from "@/components/RegIdAutocomplete";
 
 type User = {
@@ -30,10 +29,13 @@ type ConsumeGenerationMutation = {
   };
 };
 
+const ADMIN_REG_ID = process.env.NEXT_PUBLIC_ADMIN_REG_ID!;
+
 export default function Home() {
   const [image, setImage] = useState<File | null>(null);
   const [genre, setGenre] = useState<string | null>(null);
   const [selectedRegId, setSelectedRegId] = useState("");
+  const [loading, setLoading] = useState(false);
 
   const [modal, setModal] = useState<{
     title: string;
@@ -44,32 +46,53 @@ export default function Home() {
 
   const { data, loading: usersLoading } = useQuery<GetUsersQuery>(GET_USERS);
 
-  const [consumeGeneration, { loading: consumeLoading }] =
+  const [consumeGeneration] =
     useMutation<ConsumeGenerationMutation>(CONSUME_GENERATION);
 
   const users = data?.users ?? [];
+
+  const isAdmin =
+    selectedRegId.trim().toUpperCase() === ADMIN_REG_ID.trim().toUpperCase();
+
   const user = users.find((u) => u.regId === selectedRegId);
 
   async function generate() {
-    if (!user) {
+    setLoading(true);
+    console.log("SelectedRegId:", selectedRegId);
+
+    if (!selectedRegId.trim()) {
       setModal({
         title: "Registration ID required",
         message:
-          "Please select your registration ID before generating your Echo.",
+          "Please select or enter your registration ID before generating your Echo.",
       });
+      setLoading(false);
       return;
     }
 
-    if (user.generations >= 4) {
+    if (!isAdmin && !user) {
+      setModal({
+        title: "Invalid Registration ID",
+        message: "This registration ID was not found.",
+      });
+      setLoading(false);
+      return;
+    }
+
+    if (!isAdmin && user && user.generations >= 4) {
       setModal({
         title: "Generation limit reached",
         message:
           "You have already used all 4 available generations. Please contact the booth volunteer if you need help.",
       });
+      setLoading(false);
       return;
     }
 
-    if (!image || !genre) return;
+    if (!image || !genre) {
+      setLoading(false);
+      return;
+    }
 
     try {
       const fd = new FormData();
@@ -89,6 +112,7 @@ export default function Home() {
           message:
             "The AI generation credits for this booth have been fully used. Please contact the volunteer for assistance.",
         });
+        setLoading(false);
         return;
       }
 
@@ -96,21 +120,25 @@ export default function Home() {
         throw new Error(data?.message || "Generation failed");
       }
 
-      await consumeGeneration({
-        variables: { regId: user.regId },
-      });
+      if (!isAdmin && user) {
+        await consumeGeneration({
+          variables: { regId: user.regId },
+        });
+      }
 
       window.location.href = `/result?img=${data.img}&audio=${data.audio}&genre=${data.genre}`;
-    } catch (error: any) {
+    } catch {
       setModal({
         title: "Something went wrong",
         message:
           "We couldn't generate your Echo right now. Please try again or contact the volunteer.",
       });
+    } finally {
+      setLoading(false);
     }
   }
 
-  const exhausted = user && user.generations >= 4;
+  const exhausted = !isAdmin && user && user.generations >= 4;
 
   return (
     <main className="flex min-h-screen items-center justify-center bg-linear-to-br from-zinc-200 via-white to-zinc-200 p-6 text-zinc-900">
@@ -138,7 +166,7 @@ export default function Home() {
             disabled={usersLoading}
           />
 
-          {user && (
+          {user && !isAdmin && (
             <p className="text-center text-sm text-zinc-500">
               Remaining generations:{" "}
               <span className="font-semibold text-zinc-900">
@@ -147,19 +175,25 @@ export default function Home() {
             </p>
           )}
 
+          {isAdmin && selectedRegId && (
+            <p className="text-center text-sm font-semibold text-emerald-600">
+              Admin mode · Unlimited generations
+            </p>
+          )}
+
           <ImageUpload onSelect={setImage} />
           <GenrePicker value={genre} onPick={setGenre} />
 
           <button
-            disabled={consumeLoading || !image || !genre}
+            disabled={loading || !image || !genre}
             onClick={generate}
             className={`w-full rounded-xl py-3 font-semibold transition ${
-              consumeLoading
+              loading
                 ? "cursor-not-allowed bg-zinc-200 text-zinc-400"
                 : "bg-zinc-900 text-white hover:bg-zinc-800"
             }`}
           >
-            {consumeLoading ? "Creating your echo…" : "Generate My Echo"}
+            {loading ? "Creating your echo…" : "Generate My Echo"}
           </button>
 
           {exhausted && (

@@ -26,11 +26,10 @@ export default function RegIdAutocomplete({
   const containerRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    const selected = users.find((u) => u.regId === value);
-    if (selected) {
-      setQuery(selected.regId);
+    if (value) {
+      setQuery(value);
     }
-  }, [value, users]);
+  }, [value]);
 
   useEffect(() => {
     function handleClickOutside(e: MouseEvent) {
@@ -63,9 +62,10 @@ export default function RegIdAutocomplete({
         placeholder="Enter Registration ID or Name"
         onFocus={() => setOpen(true)}
         onChange={(e) => {
-          setQuery(e.target.value);
+          const val = e.target.value;
+          setQuery(val);
+          onChange(val);
           setOpen(true);
-          onChange("");
         }}
         className="w-full rounded-xl border p-3 outline-none focus:border-zinc-500 disabled:opacity-50"
       />
