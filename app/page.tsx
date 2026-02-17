@@ -72,11 +72,6 @@ export default function Home() {
     if (!image || !genre) return;
 
     try {
-      await consumeGeneration({
-        variables: { regId: user.regId },
-        refetchQueries: [GET_USERS],
-      });
-
       const fd = new FormData();
       fd.append("image", image);
       fd.append("genre", genre);
@@ -100,6 +95,10 @@ export default function Home() {
       if (!res.ok) {
         throw new Error(data?.message || "Generation failed");
       }
+
+      await consumeGeneration({
+        variables: { regId: user.regId },
+      });
 
       window.location.href = `/result?img=${data.img}&audio=${data.audio}&genre=${data.genre}`;
     } catch (error: any) {
