@@ -1,20 +1,11 @@
 "use client";
 
 import Image from "next/image";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 
-async function resizeImage(file: File): Promise<File> {
-  const img = document.createElement("img");
-  const canvas = document.createElement("canvas");
-  const ctx = canvas.getContext("2d")!;
-
-  const objectUrl = URL.createObjectURL(file);
-  img.src = objectUrl;
-
-  await new Promise((res) => (img.onload = res));
-
+async function resizeFromCanvas(canvas: HTMLCanvasElement): Promise<File> {
   const MAX = 512;
-  let { width, height } = img;
+  let { width, height } = canvas;
 
   if (width > height && width > MAX) {
     height = Math.round((height * MAX) / width);
@@ -24,17 +15,18 @@ async function resizeImage(file: File): Promise<File> {
     height = MAX;
   }
 
-  canvas.width = width;
-  canvas.height = height;
-  ctx.drawImage(img, 0, 0, width, height);
+  const resized = document.createElement("canvas");
+  const ctx = resized.getContext("2d")!;
 
-  URL.revokeObjectURL(objectUrl);
+  resized.width = width;
+  resized.height = height;
+  ctx.drawImage(canvas, 0, 0, width, height);
 
   const blob = await new Promise<Blob>((res) =>
-    canvas.toBlob((b) => res(b!), "image/jpeg", 0.8)
+    resized.toBlob((b) => res(b!), "image/jpeg", 0.8)
   );
 
-  return new File([blob], "upload.jpg", { type: "image/jpeg" });
+  return new File([blob], "capture.jpg", { type: "image/jpeg" });
 }
 
 export default function ImageUpload({
@@ -42,66 +34,91 @@ export default function ImageUpload({
 }: {
   onSelect: (f: File) => void;
 }) {
+  const videoRef = useRef<HTMLVideoElement>(null);
+  const canvasRef = useRef<HTMLCanvasElement>(null);
+
   const [preview, setPreview] = useState<string | null>(null);
-  const [dragging, setDragging] = useState(false);
+  const [stream, setStream] = useState<MediaStream | null>(null);
+  const [flash, setFlash] = useState(false);
 
-  useEffect(() => {
-    return () => {
-      if (preview) URL.revokeObjectURL(preview);
-    };
-  }, [preview]);
+  async function startCamera() {
+    const mediaStream = await navigator.mediaDevices.getUserMedia({
+      video: {
+        facingMode: "user",
+        width: { ideal: 1024 },
+        height: { ideal: 1024 },
+      },
+    });
 
-  async function handleFile(file: File) {
-    const resized = await resizeImage(file);
-    if (preview) URL.revokeObjectURL(preview);
-    const url = URL.createObjectURL(resized);
-    setPreview(url);
-    onSelect(resized);
+    setStream(mediaStream);
+
+    if (videoRef.current) {
+      videoRef.current.srcObject = mediaStream;
+    }
   }
 
-  function reset() {
+  function stopCamera() {
+    stream?.getTracks().forEach((t) => t.stop());
+    setStream(null);
+  }
+
+  useEffect(() => {
+    startCamera();
+    return () => stopCamera();
+  }, []);
+
+  async function capture() {
+    if (!videoRef.current || !canvasRef.current) return;
+
+    setFlash(true);
+    setTimeout(() => setFlash(false), 150);
+
+    const video = videoRef.current;
+    const canvas = canvasRef.current;
+    const ctx = canvas.getContext("2d")!;
+
+    canvas.width = video.videoWidth;
+    canvas.height = video.videoHeight;
+    ctx.drawImage(video, 0, 0);
+
+    const file = await resizeFromCanvas(canvas);
+    const url = URL.createObjectURL(file);
+
+    setPreview(url);
+    onSelect(file);
+    stopCamera();
+  }
+
+  function retake() {
     if (preview) URL.revokeObjectURL(preview);
     setPreview(null);
+    startCamera();
   }
 
   return (
-    <div className="space-y-4">
+    <div className="space-y-4 text-center">
       {!preview && (
-        <label
-          onDragOver={(e) => {
-            e.preventDefault();
-            setDragging(true);
-          }}
-          onDragLeave={() => setDragging(false)}
-          onDrop={(e) => {
-            e.preventDefault();
-            setDragging(false);
-            const file = e.dataTransfer.files?.[0];
-            if (file) handleFile(file);
-          }}
-          className={`flex cursor-pointer flex-col items-center justify-center rounded-2xl border-2 border-dashed p-8 text-center transition ${
-            dragging
-              ? "border-zinc-900 bg-zinc-100"
-              : "border-zinc-300 hover:border-zinc-400"
-          }`}
-        >
-          <input
-            type="file"
-            accept="image/*"
-            className="hidden"
-            onChange={(e) => {
-              const file = e.target.files?.[0];
-              if (file) handleFile(file);
-            }}
-          />
+        <div className="relative mx-auto w-[320px]">
+          <div className="relative h-80 w-[320px] overflow-hidden rounded-full shadow-2xl ring-4 ring-zinc-200">
+            <video
+              ref={videoRef}
+              autoPlay
+              playsInline
+              className="h-full w-full object-cover"
+            />
 
-          <p className="font-medium text-zinc-800">
-            Click to upload or drag & drop
-          </p>
-          <p className="mt-1 text-sm text-zinc-500">
-            JPG / PNG · auto-optimized
-          </p>
-        </label>
+            {flash && (
+              <div className="animate-flash absolute inset-0 rounded-full bg-white" />
+            )}
+          </div>
+
+          <button
+            onClick={capture}
+            className="mt-5 rounded-xl bg-zinc-900 px-6 py-2 text-sm font-medium text-white shadow hover:bg-zinc-800"
+          >
+            Capture
+          </button>
+        </div>
       )}
 
       {preview && (
@@ -111,17 +128,19 @@ export default function ImageUpload({
             width={256}
             height={256}
             alt="preview"
-            className="rounded-xl shadow-lg"
+            className="rounded-full shadow-xl"
           />
 
           <button
-            onClick={reset}
+            onClick={retake}
             className="absolute -top-3 -right-3 rounded-full bg-zinc-900 px-3 py-1 text-xs font-medium text-white shadow hover:bg-zinc-800"
           >
-            Change
+            Retake
           </button>
         </div>
       )}
+
+      <canvas ref={canvasRef} className="hidden" />
     </div>
   );
 }
