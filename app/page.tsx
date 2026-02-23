@@ -206,10 +206,6 @@ export default function Home() {
             <AdminResetPanel regId={user.regId} name={user.name} />
           )}
         </div>
-
-        <p className="text-center text-xs text-zinc-400">
-          Live AI demo · Conference preview build
-        </p>
       </div>
 
       {modal && (
