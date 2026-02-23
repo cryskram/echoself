@@ -59,52 +59,99 @@ const ATTIRE_CONFIG: Record<string, { male: string; female: string }> = {
 
 const GENRE_STYLES: Record<string, GenreDetails> = {
   rock: {
-    scene:
-      "Hyper-dynamic gritty album art. Wide-legged power stance. Environment: dystopian crumbling city at twilight with dramatic cinematic smoke and flickering neon signs. High contrast, deep moody shadows.",
+    scene: `
+ENERGY: Raw, explosive, untamed rebellion. This is not a photo — this is a war cry frozen in time.
+POSE: Mid-scream or mid-roar, head thrown slightly back, eyes intense and burning, veins of emotion visible in the neck. The body is electric with barely contained energy.
+ENVIRONMENT: A collapsing dystopian cityscape at twilight — crumbling brutalist concrete towers, shattered glass raining in slow motion, industrial smoke billowing dramatically, electric sparks flying from downed power lines. The sky is a violent bruised purple and deep crimson.
+LIGHTING: Harsh, aggressive side-lighting cutting sharp shadows across the face. A single blood-red spotlight from below carving dramatic contours. Lens flare from an explosion behind.
+MOOD: You can almost hear the guitar feedback. The image should feel loud even in silence.
+COLOR PALETTE: Desaturated blacks, ash greys, deep crimson accents, electric white highlights.`.trim(),
     typography:
-      "Jagged, distressed metallic chrome lettering with a cracked texture, positioned at the top center.",
+      "Jagged, deeply distressed metallic chrome lettering — each letter fractured and splintered like shattered glass, with a raw rust-and-chrome texture. Positioned at the top center, slightly tilted, as if scratched into the image itself.",
   },
+
   edm: {
-    scene:
-      "Retro-futuristic Synthwave dreamscape. Confident stance surrounded by floating geometric cubes, laser grid floors, and electric neon light trails. Deep purple and cyan color palette.",
+    scene: `
+ENERGY: Transcendent euphoria at 3AM — the drop just hit and everything is light and frequency.
+POSE: Arms slightly raised or outstretched, head tilted back in pure ecstasy, eyes closed or half-open glowing with reflected neon. The subject floats in the center of a digital universe.
+ENVIRONMENT: A vast infinite Synthwave grid stretching to the horizon, giant glowing geometric prisms and translucent cubes orbiting the subject, cascading laser beams slicing through fog, holographic waveforms rippling outward from the subject's body like a pulse. A giant neon sun sets on the horizon grid.
+LIGHTING: Backlit with a massive magenta and cyan halo. Light refracts off the holographic clothing creating rainbow prismatic scatter across the scene. Volumetric light beams cut through haze.
+MOOD: Pure sensory overload. Euphoric. Futuristic. As if sound has been made visible.
+COLOR PALETTE: Deep ultraviolet, electric cyan, hot magenta, neon coral, chrome white.`.trim(),
     typography:
-      "Retro 80s chrome and neon gradient script font with a glow effect, positioned at the top.",
+      "Retro 80s chrome and neon gradient script — letters dripping with a glowing plasma edge, with a chromatic aberration shift offset. Positioned at the top with a subtle glow bloom behind it.",
   },
+
   chill: {
-    scene:
-      "Organic warm cinematic film photography. Sitting on a wooden stool in a vast golden wheat field at sunset, soft bokeh and dreamy lens flare. Warm amber and honey tones throughout.",
+    scene: `
+ENERGY: Slow exhale. Golden hour. Nothing needs to happen right now and that is everything.
+POSE: Seated naturally on a weathered wooden stool or cross-legged in the grass — completely at ease, maybe eyes closed with a faint smile, or gazing softly into the middle distance. No performance. Just presence.
+ENVIRONMENT: A vast open wheat field at the peak of golden hour — tall grass swaying gently, wildflowers scattered throughout, a lone tree on the horizon. The sun is low, casting everything in liquid amber and honey. Soft lens flare bleeds across the frame. Film grain texture overlaid.
+LIGHTING: Warm, diffused golden backlight wrapping around the subject like a hug. No harsh shadows — everything is soft, hazy, and intimate. Shallow depth of field blurs the field into painterly bokeh.
+MOOD: Like the first track of a Sunday morning playlist. Unhurried. Deeply human. A little nostalgic.
+COLOR PALETTE: Burnt amber, honey gold, warm cream, dusty rose, soft sage green.`.trim(),
     typography:
-      "Elegant flowing handwritten script font in warm off-white, centered at the top.",
+      "An elegant, loose handwritten script — slightly imperfect, as if signed with a fountain pen, in warm off-white or pale gold. Centered at the top, with soft shadow underneath.",
   },
+
   jazz: {
-    scene:
-      "Luxurious vintage noir aesthetic. Seated in a plush velvet armchair inside a smoky 1940s art-deco jazz lounge. Warm amber spotlights, dramatic shadows, a grand piano partially visible in the background.",
+    scene: `
+ENERGY: Sophisticated, smoky, and impossibly cool. The kind of album you put on when you want to feel like you understand something about life.
+POSE: Leaning back in a plush velvet chair with total ease — one leg crossed, perhaps holding a glass or resting a hand on a knee. Eyes half-lidded, knowing, a ghost of a smile. The pose says everything without trying.
+ENVIRONMENT: A dimly lit 1940s art-deco jazz club — dark mahogany walls, ornate brass fixtures, circular amber spotlights cutting through cigarette smoke, a grand piano visible and partially lit in the background, a double bass leaning against the wall. The bar glitters faintly behind.
+LIGHTING: Warm amber key light from above, deep theatrical shadows on one side of the face. Rim light in deep gold separating the subject from the dark background. Film noir contrast — rich blacks, warm golds.
+MOOD: Like Miles Davis with a glass of bourbon. Timeless. Effortlessly cool. There is depth behind those eyes.
+COLOR PALETTE: Deep mahogany, amber gold, ivory, soft brass, cigarette smoke grey.`.trim(),
     typography:
-      "Bold retro brass serif font with an aged-paper texture, positioned at the top.",
+      "A bold classic brass serif font — heavy weight, slightly condensed, with a warm aged-paper patina and subtle letterpress texture. Positioned at the top, commanding and confident.",
   },
+
   hindustani: {
-    scene:
-      "Ethereal spiritual painterly mood. Seated cross-legged in a meditative pose in an ancient stone courtyard at golden-hour dawn, soft mist rising, marigold petals scattered on the stone floor.",
+    scene: `
+ENERGY: Ancient. Meditative. The kind of music that exists between notes — in the breath before the raga begins.
+POSE: Seated cross-legged in perfect stillness — spine straight, hands resting in a mudra on the knees, eyes closed in deep inward focus. The face carries absolute serenity, as if the world has gone quiet.
+ENVIRONMENT: An ancient sandstone courtyard at the precise moment of dawn — carved stone pillars framing the scene, mist rising from the stone floor in soft tendrils, a carpet of fresh marigold petals scattered around the subject, the first light of the sun painting the horizon in gold and rose. The sky transitions from deep indigo to warm saffron.
+LIGHTING: The first ray of sunrise lands gently across the face — warm, sacred, directional. Soft volumetric god-rays filter through mist. The background remains deep and mysterious in pre-dawn shadow.
+MOOD: As if the universe has paused to listen. A sense of infinite time. Deeply spiritual, profoundly still.
+COLOR PALETTE: Deep indigo, saffron gold, marigold orange, soft rose, sandstone ivory.`.trim(),
     typography:
-      "Flowing calligraphic gold brush lettering, positioned at the bottom.",
+      "Flowing hand-painted calligraphic lettering in burnished gold — each stroke deliberate, like ink on a manuscript. Positioned reverently at the bottom of the frame.",
   },
+
   carnatic: {
-    scene:
-      "Vibrant rich cultural photography. Passionate mid-performance pose inside a richly decorated temple hall with ornate stone pillars, warm oil-lamp lighting, and garlands of marigolds and roses.",
+    scene: `
+ENERGY: Devotional fire. Mathematical precision fused with spiritual ecstasy — every note an offering.
+POSE: Caught mid-performance — eyes open wide and burning with intensity, or closed with deep emotion, mouth open in song or locked in concentration. One hand raised gesturing a mudra or marking a beat, the body leaning forward into the music with complete surrender.
+ENVIRONMENT: The inner sanctum of an ancient Dravidian temple — towering stone pillars carved with intricate sculptures, warm brass oil lamps (diyas) casting flickering golden light, garlands of marigolds and roses draped over stone, the faint suggestion of a deity's altar behind in deep shadow. Incense smoke curls upward.
+LIGHTING: Dramatic warm oil-lamp lighting — golden and flickering, casting rich shadows across carved stone. The subject is lit from below and the sides with warm flame light, creating a sacred, ancient atmosphere. High contrast between glowing warmth and deep temple shadows.
+MOOD: The devotion is palpable. This is music as prayer, as discipline, as surrender.
+COLOR PALETTE: Deep ochre, temple gold, crimson, burnt sienna, sacred ash white.`.trim(),
     typography:
-      "Ornamental South Indian classical style font in gold on a dark base, centered at the bottom.",
+      "Ornamental South Indian classical lettering — inspired by ancient palm-leaf manuscript scripts, rendered in burnished gold with decorative flourishes. Centered at the bottom on a deep dark base.",
   },
+
   indian: {
-    scene:
-      "Modern indie-fusion urban aesthetic. Candid editorial portrait leaning casually against a textured brick wall strung with warm fairy lights. Relaxed, warm, magazine-quality mood.",
+    scene: `
+ENERGY: Effortlessly cool, culturally rooted, completely modern. The sound of India right now — not nostalgic, not trying too hard.
+POSE: Candid and relaxed — leaning against a textured wall with one shoulder, arms loosely crossed or hands in pockets, a genuine half-smile. The kind of portrait that feels like you caught them between moments. Authentic, not posed.
+ENVIRONMENT: A vibrant urban alley in an Indian city at dusk — exposed brick walls covered in texture and peeling paint, strings of warm fairy lights draped above, potted plants spilling over from a balcony, the distant sound of city life implied in the background depth. Warm and alive.
+LIGHTING: Soft warm fairy light glow mixing with the last of the evening's natural light — golden, intimate, editorial. Slight film grain. The mood of a magazine shoot that didn't try to feel like a magazine shoot.
+MOOD: Grounded. Contemporary. The bridge between tradition and the present — and totally at home there.
+COLOR PALETTE: Warm terracotta, mauve, dusty gold, soft cream, denim blue.`.trim(),
     typography:
-      "Clean modern geometric sans-serif font in white, positioned at the bottom.",
+      "A clean, confident geometric sans-serif — modern weight, generous spacing, in crisp white or soft off-white. Positioned at the bottom, understated and editorial.",
   },
+
   bollywood: {
-    scene:
-      "Larger-than-life epic movie poster energy. Heroic dramatic pose on a grand Rajasthani palace balcony overlooking misty mountains at a fiery sunset. Rich jewel tones, cinematic grandeur.",
+    scene: `
+ENERGY: MAXIMUM DRAMA. This is not an album cover — this is a monument. Every pixel radiates star power.
+POSE: A full heroic stance — chin slightly raised, eyes burning directly into the camera with absolute confidence and magnetic charisma. One hand perhaps gesturing outward or placed over the heart. The subject owns every frame. This is a star.
+ENVIRONMENT: The grand balcony of a colossal Rajasthani palace — ornate carved marble railings, towering sandstone archways behind, silk drapes billowing in a warm wind. Beyond the balcony: a sweeping panorama of misty mountains at a cinematic fiery sunset, the sky ablaze in gold, amber, and deep magenta. Rose petals drift through the air. The scale is staggering.
+LIGHTING: Epic golden-hour cinematic lighting — warm key light bathing the subject in a heroic glow, deep rich shadows behind, a gentle rim light separating them magnificently from the palatial background. Think: the poster lighting of the greatest Bollywood film ever made.
+MOOD: Larger than life. Emotionally overwhelming. You feel like applauding just looking at it.
+COLOR PALETTE: Royal crimson, palace gold, deep amber, regal ivory, misty violet mountains.`.trim(),
     typography:
-      "Grand 3D metallic block font with a golden gradient and a bold drop shadow, positioned at the bottom center.",
+      "Grand cinematic 3D block lettering — thick strokes with a deep golden metallic gradient, dramatic embossed bevel, and a bold cinematic drop shadow. Positioned at the bottom center like a title card, commanding and unmissable.",
   },
 };
 
@@ -148,19 +195,19 @@ CRITICAL: Do NOT androgynize or ambiguate the subject's gender. Match the refere
 - The subject must be instantly recognizable as the same person from the reference.
 - Only their wardrobe, styling, and scene context change — their face and identity do not.
 
-### STEP 4 — SCENE & MOOD ###
+### STEP 4 — SCENE, MOOD & ENERGY ###
 ${style.scene}
 
 ### STEP 5 — PHOTOGRAPHY QUALITY ###
 - Professional album cover photography.
 - Cinematic lighting with sharp focus on the face.
-- 8K resolution quality feel.
-- The subject should be the clear focal point of the composition.
+- 8K resolution quality feel with appropriate color grading for the genre.
+- The subject is the undisputed focal point of the entire composition.
 
 ### STEP 6 — TYPOGRAPHY ###
 - The ONLY text rendered on this image is the album title: "${genre.toUpperCase()}"
-- Do NOT add any other words, labels, or random text anywhere.
+- Do NOT add any other words, labels, or random text anywhere on the image.
 - Render the title in this exact style: ${style.typography}
-- The title must look like professionally designed graphic art, fully integrated into the composition — not overlaid as an afterthought.
+- The title must feel like it was designed specifically for this image — fully integrated, not an afterthought.
 `.trim();
 };
