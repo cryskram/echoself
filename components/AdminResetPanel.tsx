@@ -4,7 +4,7 @@ import { useState } from "react";
 import { useMutation } from "@apollo/client/react";
 import { RESET_GENERATIONS, GET_USERS } from "@/graphql/operations";
 
-const ADMIN_PIN = process.env.ADMIN_PIN as string;
+const ADMIN_PIN = process.env.NEXT_PUBLIC_ADMIN_PIN as string;
 
 type Props = {
   regId: string;
@@ -26,6 +26,8 @@ export default function AdminResetPanel({ regId, name }: Props) {
       alert("Invalid admin PIN");
     }
   }
+
+  console.log({ pin, ADMIN_PIN });
 
   async function reset() {
     await resetGenerations({ variables: { regId } });
