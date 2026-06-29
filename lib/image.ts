@@ -8,7 +8,7 @@ const openai = new OpenAI({
 export async function generateImage(file: File, prompt: string) {
   try {
     const res = await openai.images.edit({
-      model: "gpt-image-1",
+      model: "gpt-image-2",
       image: file,
       prompt,
       size: "1024x1024",

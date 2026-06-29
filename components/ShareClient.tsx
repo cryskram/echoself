@@ -21,8 +21,19 @@ export default function ShareClient() {
     <main className="flex min-h-screen items-center justify-center bg-zinc-50 p-6">
       <div className="w-full max-w-md space-y-4 rounded-2xl bg-white p-6 text-center shadow-lg ring-1 ring-zinc-200">
         <div className="flex justify-center gap-6 pb-2">
-          <Image src="/images/apscon.png" alt="APSCon" width={72} height={36} />
-          <Image src="/images/sc.png" alt="SC" width={120} height={64} />
+          <Image
+            src="/images/bangaloresec.png"
+            alt="SPS"
+            height={32}
+            width={200}
+          />
+          <Image
+            src="/images/dataport.png"
+            alt="SPS"
+            width={200}
+            height={32}
+            className="mt-2"
+          />
         </div>
 
         <h1 className="text-2xl font-semibold text-zinc-900 uppercase">

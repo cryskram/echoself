@@ -143,9 +143,20 @@ export default function Home() {
   return (
     <main className="flex min-h-screen items-center justify-center bg-linear-to-br from-zinc-200 via-white to-zinc-200 p-6 text-zinc-900">
       <div className="w-full max-w-xl space-y-8">
-        <div className="flex justify-center gap-8">
-          <Image src="/images/apscon.png" alt="APSCon" width={90} height={45} />
-          <Image src="/images/sc.png" alt="SPS" width={120} height={64} />
+        <div className="flex items-center justify-center gap-8">
+          <Image
+            src="/images/bangaloresec.png"
+            alt="SPS"
+            height={32}
+            width={200}
+          />
+          <Image
+            src="/images/dataport.png"
+            alt="SPS"
+            width={200}
+            height={32}
+            className="mt-2"
+          />
         </div>
 
         <div className="text-center">
