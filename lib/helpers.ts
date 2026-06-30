@@ -69,7 +69,8 @@ const GENRE_STYLES: Record<Genre, GenreDetails> = {
     pose: "Captured during the peak of a live performance with dynamic body language, weight shifted forward and authentic stage presence. Avoid static portrait poses.",
     camera:
       "35mm documentary concert photography, natural motion, subtle lens imperfections, HDR, shallow depth of field, editorial realism.",
-    typography: "Distressed metallic chrome title.",
+    typography:
+      "Large distressed metallic chrome lettering with scratches, worn steel texture and subtle sparks.",
   },
   edm: {
     mood: "Futuristic festival euphoria.",
@@ -80,7 +81,8 @@ const GENRE_STYLES: Record<Genre, GenreDetails> = {
     composition: "Centered cinematic portrait.",
     pose: "Immersed in the music with natural movement.",
     camera: "35mm festival photography, HDR editorial realism.",
-    typography: "Chrome futuristic typography.",
+    typography:
+      "Large futuristic chrome typography with neon cyan and magenta glow, inspired by electronic festival visuals.",
   },
   chill: {
     mood: "Peaceful and nostalgic.",
@@ -89,7 +91,8 @@ const GENRE_STYLES: Record<Genre, GenreDetails> = {
     composition: "Relaxed editorial portrait.",
     pose: "Natural candid posture.",
     camera: "85mm portrait photography with creamy bokeh.",
-    typography: "Elegant handwritten title.",
+    typography:
+      "Elegant handwritten script in warm ivory with soft glow and subtle shadow.",
   },
   jazz: {
     mood: "Timeless sophistication.",
@@ -98,7 +101,8 @@ const GENRE_STYLES: Record<Genre, GenreDetails> = {
     composition: "Luxury editorial portrait.",
     pose: "Relaxed seated confidence.",
     camera: "85mm classic editorial photography.",
-    typography: "Classic brass serif.",
+    typography:
+      "Classic brass serif typography with vintage engraving and warm gold highlights.",
   },
   hindustani: {
     mood: "Spiritual and meditative.",
@@ -107,7 +111,8 @@ const GENRE_STYLES: Record<Genre, GenreDetails> = {
     composition: "Centered portrait.",
     pose: "Calm seated posture.",
     camera: "85mm editorial portrait.",
-    typography: "Traditional gold calligraphy.",
+    typography:
+      "Traditional hand-painted gold calligraphy inspired by classical Indian manuscripts.",
   },
   carnatic: {
     mood: "Devotional classical performance.",
@@ -118,7 +123,8 @@ const GENRE_STYLES: Record<Genre, GenreDetails> = {
     composition: "Medium performance portrait.",
     pose: "Expressive singing with authentic classical hand gestures.",
     camera: "85mm low-light editorial photography.",
-    typography: "South Indian ornamental gold lettering.",
+    typography:
+      "Ornamental South Indian inspired gold lettering with temple-inspired flourishes.",
   },
   indian: {
     mood: "Modern authentic lifestyle.",
@@ -127,7 +133,8 @@ const GENRE_STYLES: Record<Genre, GenreDetails> = {
     composition: "Fashion editorial portrait.",
     pose: "Relaxed confident lifestyle pose.",
     camera: "50mm lifestyle photography.",
-    typography: "Minimal modern typography.",
+    typography:
+      "Minimal modern sans-serif typography with clean editorial styling.",
   },
   bollywood: {
     mood: "Heroic blockbuster charisma.",
@@ -137,7 +144,8 @@ const GENRE_STYLES: Record<Genre, GenreDetails> = {
     composition: "Blockbuster hero framing.",
     pose: "Powerful heroic stance.",
     camera: "85mm cinema photography with HDR.",
-    typography: "Grand embossed gold title.",
+    typography:
+      "Large embossed royal gold cinematic lettering inspired by blockbuster Bollywood movie posters.",
   },
 };
 
@@ -253,14 +261,38 @@ The face, neck and body must share identical lighting, rendering style and textu
 
 Everything should appear captured in a single camera exposure.
 
+The composition should naturally reserve space for the album title without obscuring the subject's face or important visual elements.
+
 ## Typography
 
-Leave clean negative space for a title.
+Render the album title as part of the artwork.
 
-Do not generate readable text, logos or watermarks.
+The ONLY readable text in the entire image must be:
 
-Typography inspiration:
+"${genre.toUpperCase()}"
+
+The title should be professionally designed and seamlessly integrated into the composition.
+
+Typography style:
 ${s.typography}
+
+The text should match the genre and environment naturally.
+
+The title should be large, highly legible, and appear intentionally designed rather than simply placed on top.
+
+Do not generate any additional words.
+
+Do not generate artist names.
+
+Do not generate subtitles.
+
+Do not generate logos.
+
+Do not generate watermarks.
+
+Do not misspell the title.
+
+Ensure the title is perfectly readable.
 
 ## Avoid
 
