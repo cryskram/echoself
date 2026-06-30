@@ -7,10 +7,19 @@ datasource db {
   provider = "postgresql"
 }
 
-model User {
-  id          String   @id @default(uuid())
-  regId       String   @unique
-  name        String
-  generations Int      @default(0)
-  createdAt   DateTime @default(now())
+// model User {
+//   id          String   @id @default(uuid())
+//   regId       String   @unique
+//   name        String
+//   generations Int      @default(0)
+//   createdAt   DateTime @default(now())
+// }
+
+model Generation {
+  id        String   @id @default(cuid())
+  email     String
+  genre     String
+  imageUrl  String
+  audioFile String
+  createdAt DateTime @default(now())
 }

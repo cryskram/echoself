@@ -1,16 +1,17 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Image from "next/image";
-import { useQuery, useMutation } from "@apollo/client/react";
+// import { useQuery, useMutation } from "@apollo/client/react";
 
 import ImageUpload from "@/components/ImageUpload";
 import GenrePicker from "@/components/GenrePicker";
 import Modal from "@/components/Modal";
+import EmailInput from "@/components/EmailInput";
 
-import { GET_USERS, CONSUME_GENERATION } from "@/graphql/operations";
-import AdminResetPanel from "@/components/AdminResetPanel";
-import RegIdAutocomplete from "@/components/RegIdAutocomplete";
+// import { GET_USERS, CONSUME_GENERATION } from "@/graphql/operations";
+// import AdminResetPanel from "@/components/AdminResetPanel";
+// import RegIdAutocomplete from "@/components/RegIdAutocomplete";
 
 type User = {
   regId: string;
@@ -32,9 +33,32 @@ type ConsumeGenerationMutation = {
 const ADMIN_REG_ID = process.env.NEXT_PUBLIC_ADMIN_REG_ID!;
 
 export default function Home() {
+  useEffect(() => {
+    document.addEventListener("contextmenu", (e) => e.preventDefault());
+    document.addEventListener("dragstart", (e) => e.preventDefault());
+    document.addEventListener("selectstart", (e) => e.preventDefault());
+  }, []);
+
+  useEffect(() => {
+    const handler = (e: KeyboardEvent) => {
+      if (
+        e.key === "F12" ||
+        (e.ctrlKey && e.shiftKey && ["I", "J", "C"].includes(e.key)) ||
+        (e.ctrlKey && e.key.toLowerCase() === "u")
+      ) {
+        e.preventDefault();
+      }
+    };
+
+    document.addEventListener("keydown", handler);
+
+    return () => document.removeEventListener("keydown", handler);
+  }, []);
+
   const [image, setImage] = useState<File | null>(null);
   const [genre, setGenre] = useState<string | null>(null);
-  const [selectedRegId, setSelectedRegId] = useState("");
+  // const [selectedRegId, setSelectedRegId] = useState("");
+  const [email, setEmail] = useState("");
   const [loading, setLoading] = useState(false);
 
   const [modal, setModal] = useState<{
@@ -44,48 +68,59 @@ export default function Home() {
 
   const closeModal = () => setModal(null);
 
-  const { data, loading: usersLoading } = useQuery<GetUsersQuery>(GET_USERS);
+  // const { data, loading: usersLoading } = useQuery<GetUsersQuery>(GET_USERS);
 
-  const [consumeGeneration] =
-    useMutation<ConsumeGenerationMutation>(CONSUME_GENERATION);
+  // const [consumeGeneration] =
+  //   useMutation<ConsumeGenerationMutation>(CONSUME_GENERATION);
 
-  const users = data?.users ?? [];
+  // const users = data?.users ?? [];
 
-  const isAdmin =
-    selectedRegId.trim().toUpperCase() === ADMIN_REG_ID.trim().toUpperCase();
+  // const isAdmin =
+  //   selectedRegId.trim().toUpperCase() === ADMIN_REG_ID.trim().toUpperCase();
 
-  const user = users.find((u) => u.regId === selectedRegId);
+  // const user = users.find((u) => u.regId === selectedRegId);
 
   async function generate() {
     setLoading(true);
-    console.log("SelectedRegId:", selectedRegId);
+    // console.log("SelectedRegId:", selectedRegId);
 
-    if (!selectedRegId.trim()) {
-      setModal({
-        title: "Registration ID required",
-        message:
-          "Please select or enter your registration ID before generating your Echo.",
-      });
-      setLoading(false);
-      return;
-    }
+    // if (!selectedRegId.trim()) {
+    //   setModal({
+    //     title: "Registration ID required",
+    //     message:
+    //       "Please select or enter your registration ID before generating your Echo.",
+    //   });
+    //   setLoading(false);
+    //   return;
+    // }
 
-    if (!isAdmin && !user) {
-      setModal({
-        title: "Invalid Registration ID",
-        message: "This registration ID was not found.",
-      });
-      setLoading(false);
-      return;
-    }
+    // if (!isAdmin && !user) {
+    //   setModal({
+    //     title: "Invalid Registration ID",
+    //     message: "This registration ID was not found.",
+    //   });
+    //   setLoading(false);
+    //   return;
+    // }
 
-    if (!isAdmin && user && user.generations >= 4) {
+    // if (!isAdmin && user && user.generations >= 4) {
+    //   setModal({
+    //     title: "Generation limit reached",
+    //     message:
+    //       "You have already used all 4 available generations. Please contact the booth volunteer if you need help.",
+    //   });
+    //   setLoading(false);
+    //   return;
+    // }
+
+    if (!email.trim()) {
       setModal({
-        title: "Generation limit reached",
-        message:
-          "You have already used all 4 available generations. Please contact the booth volunteer if you need help.",
+        title: "Email Required",
+        message: "Please enter your email address before generating your Echo.",
       });
+
       setLoading(false);
+
       return;
     }
 
@@ -98,6 +133,7 @@ export default function Home() {
       const fd = new FormData();
       fd.append("image", image);
       fd.append("genre", genre);
+      fd.append("email", email);
 
       const res = await fetch("/api/generate", {
         method: "POST",
@@ -120,11 +156,11 @@ export default function Home() {
         throw new Error(data?.message || "Generation failed");
       }
 
-      if (!isAdmin && user) {
-        await consumeGeneration({
-          variables: { regId: user.regId },
-        });
-      }
+      // if (!isAdmin && user) {
+      //   await consumeGeneration({
+      //     variables: { regId: user.regId },
+      //   });
+      // }
 
       window.location.href = `/result?img=${data.img}&audio=${data.audio}&genre=${data.genre}`;
     } catch {
@@ -138,7 +174,7 @@ export default function Home() {
     }
   }
 
-  const exhausted = !isAdmin && user && user.generations >= 4;
+  // const exhausted = !isAdmin && user && user.generations >= 4;
 
   return (
     <main className="flex min-h-screen items-center justify-center bg-linear-to-br from-zinc-200 via-white to-zinc-200 p-6 text-zinc-900">
@@ -203,7 +239,7 @@ export default function Home() {
         </div>
 
         <div className="space-y-6 rounded-2xl bg-white p-6 shadow-xl ring-1 ring-zinc-200">
-          <RegIdAutocomplete
+          {/* <RegIdAutocomplete
             users={users}
             value={selectedRegId}
             onChange={setSelectedRegId}
@@ -223,7 +259,9 @@ export default function Home() {
             <p className="text-center text-sm font-semibold text-emerald-600">
               Admin mode · Unlimited generations
             </p>
-          )}
+          )} */}
+
+          <EmailInput value={email} onChange={setEmail} />
 
           <ImageUpload onSelect={setImage} />
           <GenrePicker value={genre} onPick={setGenre} />
@@ -240,15 +278,15 @@ export default function Home() {
             {loading ? "Creating your echo…" : "Generate My Echo"}
           </button>
 
-          {exhausted && (
+          {/* {exhausted && (
             <p className="text-center text-sm text-red-500">
               You've reached the maximum of 4 generations.
             </p>
-          )}
+          )} */}
 
-          {exhausted && user && (
+          {/* {exhausted && user && (
             <AdminResetPanel regId={user.regId} name={user.name} />
-          )}
+          )} */}
         </div>
       </div>
 

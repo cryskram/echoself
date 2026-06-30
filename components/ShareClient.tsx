@@ -3,13 +3,13 @@
 import { useSearchParams } from "next/navigation";
 import Image from "next/image";
 
-export default function ShareClient() {
-  const params = useSearchParams();
+type Props = {
+  img: string;
+  genre: string;
+  audio: string;
+};
 
-  const img = params.get("img");
-  const audio = params.get("audio");
-  const genre = params.get("genre");
-
+export default function ShareClient({ img, genre, audio }: Props) {
   if (!img || !genre) return null;
 
   const imageUrl = `https://res.cloudinary.com/${process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME}/image/upload/echoself/${img}`;
