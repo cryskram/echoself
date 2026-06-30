@@ -1,6 +1,7 @@
 import { generateImage } from "@/lib/image";
 import { getRandomMusic } from "@/lib/music";
 import { Genre, GENRES, imagePrompt } from "@/lib/helpers";
+import { cookies } from "next/headers";
 
 function extractFilename(url: string) {
   return url.split("/").pop()?.split("?")[0]!;
@@ -11,6 +12,20 @@ export function isGenre(value: string): value is Genre {
 }
 
 export async function POST(req: Request) {
+  const cookieStore = await cookies();
+
+  const kiosk = cookieStore.get("echoself-kiosk");
+
+  if (kiosk?.value !== "true") {
+    return Response.json(
+      {
+        error: "Unauthorized",
+      },
+      {
+        status: 401,
+      }
+    );
+  }
   try {
     const formData = await req.formData();
 

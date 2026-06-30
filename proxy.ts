@@ -1,27 +1,30 @@
 import { NextRequest, NextResponse } from "next/server";
 
-const PUBLIC_ROUTES = ["/share", "/api/share-token", "/api/send-email"];
-
 export function proxy(req: NextRequest) {
   const { pathname } = req.nextUrl;
 
-  if (
-    pathname.startsWith("/_next") ||
-    pathname.startsWith("/images") ||
-    pathname === "/favicon.ico"
-  ) {
+  const publicRoutes = [
+    "/login",
+    "/share",
+    "/api/login",
+    "/api/send-email",
+    "/api/share-token",
+    "/favicon.ico",
+  ];
+
+  if (pathname.startsWith("/_next") || pathname.startsWith("/images")) {
     return NextResponse.next();
   }
 
-  if (PUBLIC_ROUTES.some((route) => pathname.startsWith(route))) {
+  if (publicRoutes.some((route) => pathname.startsWith(route))) {
     return NextResponse.next();
   }
 
-  const unlocked = req.cookies.get("echoself-kiosk")?.value === "true";
+  const cookie = req.cookies.get("echoself-kiosk");
 
-  if (unlocked) {
+  if (cookie?.value === "true") {
     return NextResponse.next();
   }
 
-  return NextResponse.redirect(new URL("/unlock", req.url));
+  return NextResponse.redirect(new URL("/login", req.url));
 }
