@@ -1,23 +1,23 @@
 import ShareClient from "@/components/ShareClient";
 import { verifyShareToken } from "@/lib/share";
 
-export default function SharePage({
+export default async function SharePage({
   searchParams,
 }: {
-  searchParams: {
+  searchParams: Promise<{
     t?: string;
-  };
+  }>;
 }) {
-  const token = searchParams.t;
+  const { t } = await searchParams;
 
-  if (!token) {
-    return null;
+  if (!t) {
+    return <div>Missing share token.</div>;
   }
 
-  const payload = verifyShareToken(token);
+  const payload = verifyShareToken(t);
 
   if (!payload) {
-    return null;
+    return <div>Invalid or expired share link.</div>;
   }
 
   return (

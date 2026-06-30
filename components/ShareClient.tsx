@@ -1,6 +1,5 @@
 "use client";
 
-import { useSearchParams } from "next/navigation";
 import Image from "next/image";
 
 type Props = {
@@ -19,7 +18,7 @@ export default function ShareClient({ img, genre, audio }: Props) {
 
   return (
     <main className="flex min-h-screen items-center justify-center bg-zinc-50 p-6">
-      <div className="w-full max-w-md space-y-4 rounded-2xl bg-white p-6 text-center shadow-lg ring-1 ring-zinc-200">
+      <div className="w-full max-w-xl space-y-4 rounded-2xl bg-white p-6 text-center shadow-lg ring-1 ring-zinc-200">
         <div className="mb-8 flex flex-col items-center gap-6">
           <div className="flex w-full items-center justify-center gap-10 md:gap-20">
             <Image
@@ -39,7 +38,7 @@ export default function ShareClient({ img, genre, audio }: Props) {
             />
           </div>
 
-          <div className="flex flex-wrap items-center justify-center gap-8 md:gap-14">
+          <div className="flex flex-wrap items-center justify-center gap-8">
             <Image
               src="/images/dataport.png"
               alt="IEEE DataPort"
