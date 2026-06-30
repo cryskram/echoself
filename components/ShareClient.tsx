@@ -1,6 +1,9 @@
 "use client";
 
-import Image from "next/image";
+import { useRef } from "react";
+import { toPng } from "html-to-image";
+
+import AlbumCard from "./AlbumCard";
 
 type Props = {
   img: string;
@@ -9,92 +12,118 @@ type Props = {
 };
 
 export default function ShareClient({ img, genre, audio }: Props) {
-  if (!img || !genre) return null;
+  const cardRef = useRef<HTMLDivElement>(null);
 
   const imageUrl = `https://res.cloudinary.com/${process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME}/image/upload/echoself/${img}`;
+
   const audioUrl = audio
     ? `https://res.cloudinary.com/${process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME}/video/upload/echoself/music/${genre}/${audio}`
     : null;
 
+  async function downloadAlbum() {
+    if (!cardRef.current) return;
+
+    try {
+      const dataUrl = await toPng(cardRef.current, {
+        cacheBust: true,
+        pixelRatio: 3,
+      });
+
+      const link = document.createElement("a");
+
+      link.download = `EchoSelf-${genre}.png`;
+
+      link.href = dataUrl;
+
+      link.click();
+    } catch (err) {
+      console.error(err);
+    }
+  }
+
   return (
-    <main className="flex min-h-screen items-center justify-center bg-zinc-50 p-6">
-      <div className="w-full max-w-xl space-y-4 rounded-2xl bg-white p-6 text-center shadow-lg ring-1 ring-zinc-200">
-        <div className="mb-8 flex flex-col items-center gap-6">
-          <div className="flex w-full items-center justify-center gap-10 md:gap-20">
-            <Image
-              src="/images/bangaloresec.png"
-              alt="IEEE Bangalore Section"
-              width={190}
-              height={50}
-              className="h-12 w-auto object-contain"
-            />
-
-            <Image
-              src="/images/bangalore50.png"
-              alt="IEEE Bangalore 50"
-              width={200}
-              height={50}
-              className="h-16 w-auto object-contain"
-            />
-          </div>
-
-          <div className="flex flex-wrap items-center justify-center gap-8">
-            <Image
-              src="/images/dataport.png"
-              alt="IEEE DataPort"
-              width={150}
-              height={40}
-              className="h-8 w-auto object-contain"
-            />
-
-            <Image
-              src="/images/conecct.png"
-              alt="Conecct"
-              width={150}
-              height={40}
-              className="h-12 w-auto object-contain"
-            />
-
-            <Image
-              src="/images/csbc.png"
-              alt="CSBC"
-              width={150}
-              height={40}
-              className="h-16 w-auto object-contain"
-            />
-          </div>
+    <main className="min-h-screen bg-linear-to-br from-zinc-100 via-white to-zinc-100 py-10">
+      <div className="mx-auto flex w-full max-w-7xl flex-col gap-10 px-6 lg:flex-row lg:items-start">
+        <div className="flex flex-1 justify-center">
+          <AlbumCard
+            ref={cardRef}
+            imageUrl={imageUrl}
+            genre={genre}
+            className="w-full max-w-162.5"
+          />
         </div>
 
-        <h1 className="text-2xl font-semibold text-zinc-900 uppercase">
-          Echo
-          <span className="rounded-xl bg-zinc-900 px-2 py-1 text-white">
-            Self
-          </span>
-        </h1>
+        <div className="w-full max-w-xl space-y-6">
+          <section className="rounded-3xl bg-white p-6 shadow-lg ring-1 ring-zinc-200">
+            <h2 className="mb-5 text-xl font-bold text-zinc-900">
+              🎵 Now Playing
+            </h2>
 
-        <img
-          src={imageUrl}
-          alt="Shared album art"
-          className="mx-auto rounded-xl shadow-md"
-        />
+            <p className="mb-4 text-sm tracking-[0.25em] text-zinc-500 uppercase">
+              {genre} Identity
+            </p>
 
-        {audioUrl && (
-          <audio
-            controls
-            src={audioUrl}
-            className="w-full rounded-xl border border-zinc-200 bg-zinc-100 p-2"
-          />
-        )}
+            {audioUrl ? (
+              <audio controls src={audioUrl} className="w-full rounded-xl" />
+            ) : (
+              <p className="text-zinc-500">No soundtrack available.</p>
+            )}
+          </section>
 
-        <a
-          href={imageUrl}
-          download
-          className="block rounded-xl bg-zinc-900 py-2 font-semibold text-white transition hover:bg-zinc-800"
-        >
-          Download Image
-        </a>
+          <section className="rounded-3xl bg-white p-6 shadow-lg ring-1 ring-zinc-200">
+            <h2 className="text-xl font-bold text-zinc-900">
+              📥 Download Album Cover
+            </h2>
 
-        <p className="text-xs text-zinc-500">Generated using EchoSelf</p>
+            <p className="mt-2 text-sm leading-relaxed text-zinc-600">
+              Save your personalized Echo album exactly as shown.
+            </p>
+
+            <button
+              onClick={downloadAlbum}
+              className="mt-6 w-full rounded-xl bg-zinc-900 py-3 font-semibold text-white transition hover:bg-zinc-800"
+            >
+              Download Album Cover
+            </button>
+          </section>
+
+          <section className="rounded-3xl bg-white p-6 shadow-lg ring-1 ring-zinc-200">
+            <h2 className="text-xl font-bold text-zinc-900">
+              📤 Share Your Echo
+            </h2>
+
+            <p className="mt-2 text-sm leading-relaxed text-zinc-600">
+              Copy this page and share your personalized Echo with your friends.
+            </p>
+
+            <button
+              onClick={async () => {
+                await navigator.clipboard.writeText(window.location.href);
+                alert("Share link copied!");
+              }}
+              className="mt-6 w-full rounded-xl border border-zinc-300 py-3 font-semibold transition hover:bg-zinc-100"
+            >
+              Copy Share Link
+            </button>
+          </section>
+
+          <section className="rounded-3xl bg-white p-6 shadow-lg ring-1 ring-zinc-200">
+            <h2 className="text-xl font-bold text-zinc-900">About EchoSelf</h2>
+
+            <p className="mt-3 leading-relaxed text-zinc-600">
+              EchoSelf transforms your selfie into a personalized music identity
+              using AI-generated album artwork and a curated soundtrack inspired
+              by your chosen genre.
+            </p>
+
+            <a
+              href="/"
+              className="mt-6 block w-full rounded-xl bg-zinc-900 py-3 text-center font-semibold text-white transition hover:bg-zinc-800"
+            >
+              Create Your Own Echo
+            </a>
+          </section>
+        </div>
       </div>
     </main>
   );

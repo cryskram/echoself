@@ -16,25 +16,30 @@ export async function sendEchoEmail({
   return transporter.sendMail({
     from: `"EchoSelf" <${process.env.EMAIL_USER}>`,
     to: email,
-    subject: `🎵 Your ${genre.charAt(0).toUpperCase() + genre.slice(1)} Echo is Ready!`,
+    subject: `🎵 Your ${genre.charAt(0).toUpperCase() + genre.slice(1)} Echo is Ready`,
     html: `
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta name="viewport" content="width=device-width,initial-scale=1.0" />
 </head>
 
-<body style="margin:0;padding:40px 20px;background:#f4f4f5;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;">
+<body style="
+margin:0;
+padding:32px;
+background:#f4f4f5;
+font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;
+">
 
-<table role="presentation" width="100%" cellspacing="0" cellpadding="0">
+<table width="100%" cellpadding="0" cellspacing="0">
 <tr>
 <td align="center">
 
-<table role="presentation"
+<table
 width="600"
-cellspacing="0"
 cellpadding="0"
+cellspacing="0"
 style="
 background:#ffffff;
 border-radius:24px;
@@ -46,8 +51,8 @@ box-shadow:0 12px 40px rgba(0,0,0,.08);
 <td
 align="center"
 style="
-padding:56px 40px;
-background:linear-gradient(135deg,#111827,#1f2937);
+background:#111827;
+padding:48px;
 ">
 
 <h1 style="
@@ -61,7 +66,7 @@ Echo<span style="
 background:white;
 color:#111827;
 padding:4px 12px;
-border-radius:12px;
+border-radius:10px;
 margin-left:6px;
 ">
 
@@ -77,7 +82,7 @@ font-size:18px;
 color:#d1d5db;
 ">
 
-Your personalized album just dropped 🎵
+Your Echo is ready.
 
 </p>
 
@@ -89,22 +94,39 @@ Your personalized album just dropped 🎵
 
 <img
 src="${imageUrl}"
-alt="EchoSelf Album"
 style="
-display:block;
 width:100%;
-border-radius:18px;
-box-shadow:0 10px 30px rgba(0,0,0,.18);
+border-radius:20px;
+display:block;
+box-shadow:0 8px 24px rgba(0,0,0,.15);
 "
 />
 
+<div
+style="
+display:inline-block;
+margin:24px 0 8px;
+padding:8px 16px;
+background:#18181b;
+color:white;
+border-radius:999px;
+font-size:13px;
+font-weight:600;
+letter-spacing:.08em;
+text-transform:uppercase;
+">
+
+${genre}
+
+</div>
+
 <h2 style="
-margin:36px 0 12px;
+margin:12px 0;
 font-size:30px;
 color:#111827;
 ">
 
-Your Album is Ready
+Your ${genre.charAt(0).toUpperCase() + genre.slice(1)} Echo is Ready
 
 </h2>
 
@@ -115,146 +137,41 @@ line-height:1.8;
 color:#52525b;
 ">
 
-Your AI-generated album artwork and soundtrack are now ready.
+Your personalized AI-generated album artwork and soundtrack are waiting for you.
 
-Listen, download and share your Echo with friends.
+Open your Echo to listen, download your album cover and share it with your friends.
 
 </p>
 
-<table
-role="presentation"
-width="100%"
-cellspacing="0"
-cellpadding="0"
-style="
-margin:36px 0;
-background:#18181b;
-border-radius:18px;
-padding:24px;
-color:white;
-">
-
-<tr>
-
-<td>
-
 <div style="
-font-size:13px;
-letter-spacing:2px;
-color:#a1a1aa;
-text-transform:uppercase;
-margin-bottom:18px;
+margin-top:36px;
+text-align:center;
 ">
-
-EchoSelf Original
-
-</div>
-
-<table width="100%">
-
-<tr>
-
-<td style="color:#9ca3af;padding:8px 0;">
-Genre
-</td>
-
-<td
-align="right"
-style="
-font-weight:700;
-text-transform:uppercase;
-"
->
-
-${genre}
-
-</td>
-
-</tr>
-
-<tr>
-
-<td style="color:#9ca3af;padding:8px 0;">
-Artist
-</td>
-
-<td
-align="right"
-style="
-font-weight:700;
-"
->
-
-YOU
-
-</td>
-
-</tr>
-
-<tr>
-
-<td style="color:#9ca3af;padding:8px 0;">
-Released
-</td>
-
-<td
-align="right"
-style="
-font-weight:700;
-"
->
-
-${new Date().toLocaleDateString("en-US", {
-  month: "long",
-  day: "numeric",
-  year: "numeric",
-})}
-
-</td>
-
-</tr>
-
-</table>
-
-</td>
-
-</tr>
-
-</table>
-
-<table role="presentation" width="100%">
-<tr>
-<td align="center">
 
 <a
 href="${shareUrl}"
 style="
 display:inline-block;
-padding:16px 34px;
+padding:16px 36px;
 background:#111827;
 color:white;
 text-decoration:none;
-font-size:17px;
 font-weight:700;
-border-radius:12px;
+font-size:17px;
+border-radius:14px;
 ">
 
-🎧 Listen & Download
+🎵 Open My Echo
 
 </a>
 
-</td>
-</tr>
-</table>
+</div>
 
 <table
-role="presentation"
 width="100%"
-cellspacing="0"
-cellpadding="0"
 style="
 margin-top:36px;
-background:#f9fafb;
+background:#f8fafc;
 border-radius:16px;
 "
 >
@@ -264,16 +181,16 @@ border-radius:16px;
 <td
 align="center"
 style="
-padding:24px;
+padding:26px;
 font-size:15px;
 line-height:2;
 color:#52525b;
 "
 >
 
-📱 Open your Echo to
+✨ Inside your Echo
 
-<br>
+<br><br>
 
 🎵 Listen to your soundtrack
 
@@ -302,32 +219,37 @@ style="
 padding:36px;
 background:#fafafa;
 border-top:1px solid #e5e7eb;
-"
->
+">
 
 <p style="
 margin:0;
-font-size:15px;
+font-size:16px;
 color:#6b7280;
 line-height:1.8;
 ">
 
-Music has always been personal.
-
-<br>
-
-Now your artwork is too.
+Every Echo is uniquely yours.
 
 </p>
 
 <p style="
-margin-top:18px;
-font-size:18px;
-font-weight:700;
+margin-top:20px;
+font-size:22px;
+font-weight:800;
 color:#111827;
 ">
 
-EchoSelf
+Echo<span style="
+background:#111827;
+color:white;
+padding:2px 10px;
+border-radius:8px;
+margin-left:4px;
+">
+
+Self
+
+</span>
 
 </p>
 

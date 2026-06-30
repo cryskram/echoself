@@ -31,17 +31,12 @@ export async function POST(req: Request) {
 
     const image = formData.get("image") as File | null;
     const genre = formData.get("genre");
-    const email = formData.get("email");
 
     if (!image || typeof genre !== "string" || !isGenre(genre)) {
       return Response.json({ error: "Invalid inputs" }, { status: 400 });
     }
 
-    if (
-      !(image instanceof File) ||
-      typeof genre !== "string" ||
-      typeof email !== "string"
-    ) {
+    if (!(image instanceof File) || typeof genre !== "string") {
       return Response.json(
         {
           error: "Missing inputs",

@@ -1,13 +1,12 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import Image from "next/image";
 // import { useQuery, useMutation } from "@apollo/client/react";
 
 import ImageUpload from "@/components/ImageUpload";
 import GenrePicker from "@/components/GenrePicker";
 import Modal from "@/components/Modal";
-import EmailInput from "@/components/EmailInput";
+import SponsorStrip from "@/components/SponsorStrip";
 
 // import { GET_USERS, CONSUME_GENERATION } from "@/graphql/operations";
 // import AdminResetPanel from "@/components/AdminResetPanel";
@@ -58,7 +57,6 @@ export default function Home() {
   const [image, setImage] = useState<File | null>(null);
   const [genre, setGenre] = useState<string | null>(null);
   // const [selectedRegId, setSelectedRegId] = useState("");
-  const [email, setEmail] = useState("");
   const [loading, setLoading] = useState(false);
 
   const [modal, setModal] = useState<{
@@ -113,17 +111,6 @@ export default function Home() {
     //   return;
     // }
 
-    if (!email.trim()) {
-      setModal({
-        title: "Email Required",
-        message: "Please enter your email address before generating your Echo.",
-      });
-
-      setLoading(false);
-
-      return;
-    }
-
     if (!image || !genre) {
       setLoading(false);
       return;
@@ -133,7 +120,6 @@ export default function Home() {
       const fd = new FormData();
       fd.append("image", image);
       fd.append("genre", genre);
-      fd.append("email", email);
 
       const res = await fetch("/api/generate", {
         method: "POST",
@@ -177,117 +163,77 @@ export default function Home() {
   // const exhausted = !isAdmin && user && user.generations >= 4;
 
   return (
-    <main className="flex min-h-screen items-center justify-center bg-linear-to-br from-zinc-200 via-white to-zinc-200 p-6 text-zinc-900">
-      <div className="w-full max-w-xl space-y-8">
-        <div className="mb-8 flex flex-col items-center gap-6">
-          <div className="flex w-full items-center justify-center gap-10 md:gap-20">
-            <Image
-              src="/images/bangaloresec.png"
-              alt="IEEE Bangalore Section"
-              width={190}
-              height={50}
-              className="h-12 w-auto object-contain"
-            />
+    <main className="min-h-screen bg-linear-to-br from-zinc-100 via-white to-zinc-100">
+      <div className="mx-auto flex min-h-screen max-w-7xl flex-col px-8 py-8">
+        <SponsorStrip />
+        <div className="mt-10 flex flex-1 flex-col gap-10 lg:flex-row">
+          <section className="flex flex-1 items-center justify-center">
+            <ImageUpload onSelect={setImage} />
+          </section>
 
-            <Image
-              src="/images/bangalore50.png"
-              alt="IEEE Bangalore 50"
-              width={200}
-              height={50}
-              className="h-16 w-auto object-contain"
-            />
-          </div>
+          <section className="mx-auto flex w-full max-w-xl flex-col justify-center">
+            <div>
+              <h1 className="text-6xl font-black tracking-tight text-zinc-900">
+                Echo
+                <span className="ml-2 rounded-2xl bg-zinc-900 px-4 text-white">
+                  Self
+                </span>
+              </h1>
 
-          <div className="flex flex-wrap items-center justify-center gap-8 md:gap-14">
-            <Image
-              src="/images/dataport.png"
-              alt="IEEE DataPort"
-              width={150}
-              height={40}
-              className="h-8 w-auto object-contain"
-            />
+              <p className="mt-5 max-w-md leading-relaxed text-zinc-600">
+                Turn your portrait into a personalized music identity with
+                AI-generated album artwork and a soundtrack inspired by your
+                favorite genre.
+              </p>
+            </div>
 
-            <Image
-              src="/images/conecct.png"
-              alt="Conecct"
-              width={150}
-              height={40}
-              className="h-12 w-auto object-contain"
-            />
+            <div className="mt-10">
+              <GenrePicker value={genre} onPick={setGenre} />
+            </div>
 
-            <Image
-              src="/images/csbc.png"
-              alt="CSBC"
-              width={150}
-              height={40}
-              className="h-16 w-auto object-contain"
-            />
-          </div>
+            <button
+              disabled={loading || !image || !genre}
+              onClick={generate}
+              className={`mt-10 rounded-2xl py-4 text-lg font-semibold transition ${
+                loading
+                  ? "cursor-not-allowed bg-zinc-300 text-zinc-500"
+                  : "bg-zinc-900 text-white hover:bg-zinc-800"
+              } `}
+            >
+              {loading ? "Creating Your Echo..." : "Generate My Echo"}
+            </button>
+
+            <div className="mt-10 rounded-2xl border border-zinc-200 bg-white p-5">
+              <p className="text-sm font-semibold tracking-[0.25em] text-zinc-500 uppercase">
+                How it works
+              </p>
+
+              <div className="mx-auto mt-5 grid grid-cols-3 gap-4">
+                <div>
+                  <div className="text-3xl">📸</div>
+
+                  <p className="mt-2 text-sm font-semibold">Capture</p>
+                </div>
+
+                <div>
+                  <div className="text-3xl">🎵</div>
+
+                  <p className="mt-2 text-sm font-semibold">Choose</p>
+                </div>
+
+                <div>
+                  <div className="text-3xl">✨</div>
+
+                  <p className="mt-2 text-sm font-semibold">Generate</p>
+                </div>
+              </div>
+            </div>
+          </section>
         </div>
 
-        <div className="mt-6 text-center">
-          <h1 className="text-4xl font-bold uppercase">
-            Echo
-            <span className="ml-1 rounded-xl bg-zinc-900 px-2 py-0.5 text-white">
-              Self
-            </span>
-          </h1>
-
-          <p className="mt-2 text-lg text-zinc-600">
-            See yourself. Hear yourself.
-          </p>
-        </div>
-
-        <div className="space-y-6 rounded-2xl bg-white p-6 shadow-xl ring-1 ring-zinc-200">
-          {/* <RegIdAutocomplete
-            users={users}
-            value={selectedRegId}
-            onChange={setSelectedRegId}
-            disabled={usersLoading}
-          />
-
-          {user && !isAdmin && (
-            <p className="text-center text-sm text-zinc-500">
-              Remaining generations:{" "}
-              <span className="font-semibold text-zinc-900">
-                {4 - user.generations}
-              </span>
-            </p>
-          )}
-
-          {isAdmin && selectedRegId && (
-            <p className="text-center text-sm font-semibold text-emerald-600">
-              Admin mode · Unlimited generations
-            </p>
-          )} */}
-
-          <EmailInput value={email} onChange={setEmail} />
-
-          <ImageUpload onSelect={setImage} />
-          <GenrePicker value={genre} onPick={setGenre} />
-
-          <button
-            disabled={loading || !image || !genre}
-            onClick={generate}
-            className={`w-full rounded-xl py-3 font-semibold transition ${
-              loading
-                ? "cursor-not-allowed bg-zinc-200 text-zinc-400"
-                : "bg-zinc-900 text-white hover:bg-zinc-800"
-            }`}
-          >
-            {loading ? "Creating your echo…" : "Generate My Echo"}
-          </button>
-
-          {/* {exhausted && (
-            <p className="text-center text-sm text-red-500">
-              You've reached the maximum of 4 generations.
-            </p>
-          )} */}
-
-          {/* {exhausted && user && (
-            <AdminResetPanel regId={user.regId} name={user.name} />
-          )} */}
-        </div>
+        <footer className="py-6 text-center">
+          <p className="text-sm text-zinc-500">See yourself. Hear yourself.</p>
+        </footer>
       </div>
 
       {modal && (

@@ -17,6 +17,7 @@
     "cloudinary": "^2.9.0",
     "graphql-tag": "^2.12.6",
     "graphql-yoga": "^5.18.0",
+    "html-to-image": "^1.11.13",
     "next": "^16.1.6",
     "nodemailer": "^9.0.3",
     "openai": "^6.16.0",

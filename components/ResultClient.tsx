@@ -2,78 +2,121 @@
 
 import { useSearchParams } from "next/navigation";
 import { QRCodeSVG } from "qrcode.react";
-import Image from "next/image";
-import { useEffect, useState, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
+import { toPng } from "html-to-image";
+
+import AlbumCard from "./AlbumCard";
+
+const EMAIL_REGEX = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
 export default function ResultClient() {
   const params = useSearchParams();
-
-  const [secondsLeft, setSecondsLeft] = useState(60);
-  const [email, setEmail] = useState("");
-  const [sending, setSending] = useState(false);
-  const [sent, setSent] = useState(false);
-  const [emailError, setEmailError] = useState(false);
-
-  const emailRef = useRef<HTMLInputElement>(null);
-
-  useEffect(() => {
-    const countdown = setInterval(() => {
-      setSecondsLeft((s) => {
-        if (s <= 1) {
-          clearInterval(countdown);
-          window.location.replace("/");
-          return 0;
-        }
-
-        return s - 1;
-      });
-    }, 1000);
-
-    return () => clearInterval(countdown);
-  }, []);
 
   const img = params.get("img");
   const audio = params.get("audio");
   const genre = params.get("genre");
 
-  if (!img || !genre) return null;
+  const [secondsLeft, setSecondsLeft] = useState(60);
+
+  const [shareUrl, setShareUrl] = useState("");
+
+  const [email, setEmail] = useState("");
+
+  const [sending, setSending] = useState(false);
+
+  const [sent, setSent] = useState(false);
+
+  const [emailError, setEmailError] = useState("");
+
+  const cardRef = useRef<HTMLDivElement>(null);
+
+  if (!img || !genre) {
+    return null;
+  }
 
   const imageUrl = `https://res.cloudinary.com/${process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME}/image/upload/echoself/${img}`;
+
   const audioUrl = audio
     ? `https://res.cloudinary.com/${process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME}/video/upload/echoself/music/${genre}/${audio}`
     : null;
 
-  const [shareUrl, setShareUrl] = useState("");
-
   useEffect(() => {
-    async function generateToken() {
-      const res = await fetch("/api/share-token", {
-        method: "POST",
+    async function createToken() {
+      try {
+        const res = await fetch("/api/share-token", {
+          method: "POST",
 
-        headers: {
-          "Content-Type": "application/json",
-        },
+          headers: {
+            "Content-Type": "application/json",
+          },
 
-        body: JSON.stringify({
-          img,
-          genre,
-          audio,
-        }),
-      });
+          body: JSON.stringify({
+            img,
+            genre,
+            audio,
+          }),
+        });
 
-      const data = await res.json();
+        const data = await res.json();
 
-      setShareUrl(`${window.location.origin}/share?t=${data.token}`);
+        setShareUrl(`${window.location.origin}/share?t=${data.token}`);
+      } catch {
+        console.error("Failed to generate share URL");
+      }
     }
 
-    generateToken();
+    createToken();
   }, [img, genre, audio]);
 
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setSecondsLeft((prev) => {
+        if (prev <= 1) {
+          clearInterval(interval);
+
+          window.location.replace("/");
+
+          return 0;
+        }
+
+        return prev - 1;
+      });
+    }, 1000);
+
+    return () => clearInterval(interval);
+  }, []);
+
+  async function downloadAlbum() {
+    if (!cardRef.current) return;
+
+    try {
+      const dataUrl = await toPng(cardRef.current, {
+        cacheBust: true,
+        pixelRatio: 3,
+      });
+
+      const link = document.createElement("a");
+
+      link.download = `EchoSelf-${genre}.png`;
+
+      link.href = dataUrl;
+
+      link.click();
+    } catch {
+      console.error("Download failed");
+    }
+  }
+
   async function sendEmail() {
-    if (!email) return;
+    if (!EMAIL_REGEX.test(email)) {
+      setEmailError("Please enter a valid email address.");
+      return;
+    }
 
     try {
       setSending(true);
+
+      setEmailError("");
 
       const res = await fetch("/api/send-email", {
         method: "POST",
@@ -96,144 +139,115 @@ export default function ResultClient() {
 
       setSent(true);
     } catch {
-      setSent(false);
-      setEmailError(true);
-      console.log("Couldnt send email");
+      setEmailError(
+        "Couldn't send the email. You can still use the QR code below."
+      );
     } finally {
       setSending(false);
     }
   }
 
   return (
-    <main className="flex min-h-screen items-center justify-center bg-zinc-50 p-6">
-      <div className="w-full max-w-xl space-y-6 rounded-2xl bg-white p-6 text-center shadow-lg ring-1 ring-zinc-200">
-        <div className="mb-8 flex w-full flex-col items-center gap-6">
-          <div className="flex w-full items-center justify-center gap-10">
-            <Image
-              src="/images/bangaloresec.png"
-              alt="IEEE Bangalore Section"
-              width={190}
-              height={50}
-              className="h-12 w-auto object-contain"
-            />
-
-            <Image
-              src="/images/bangalore50.png"
-              alt="IEEE Bangalore 50"
-              width={200}
-              height={50}
-              className="h-16 w-auto object-contain"
-            />
-          </div>
-
-          <div className="flex flex-wrap items-center justify-center gap-8">
-            <Image
-              src="/images/dataport.png"
-              alt="IEEE DataPort"
-              width={150}
-              height={40}
-              className="h-8 w-auto object-contain"
-            />
-
-            <Image
-              src="/images/conecct.png"
-              alt="Conecct"
-              width={150}
-              height={40}
-              className="h-12 w-auto object-contain"
-            />
-
-            <Image
-              src="/images/csbc.png"
-              alt="CSBC"
-              width={150}
-              height={40}
-              className="h-16 w-auto object-contain"
-            />
-          </div>
+    <main className="min-h-screen bg-linear-to-br from-zinc-100 via-white to-zinc-100 py-10">
+      <div className="mx-auto flex w-full max-w-7xl flex-col gap-10 px-6 lg:flex-row lg:items-start">
+        <div className="flex flex-1 justify-center">
+          <AlbumCard
+            ref={cardRef}
+            imageUrl={imageUrl}
+            genre={genre}
+            className="w-full max-w-162.5"
+          />
         </div>
 
-        <h1 className="text-2xl font-bold text-zinc-900 uppercase">
-          Echo
-          <span className="rounded-xl bg-zinc-900 px-2 py-1 text-white">
-            Self
-          </span>
-        </h1>
+        <div className="w-full max-w-xl space-y-6">
+          <section className="rounded-3xl bg-white p-6 shadow-lg ring-1 ring-zinc-200">
+            <h2 className="mb-5 text-xl font-bold text-zinc-900">
+              🎵 Listen to your soundtrack
+            </h2>
 
-        <img
-          src={imageUrl}
-          alt="Generated album art"
-          className="mx-auto rounded-2xl shadow-md"
-        />
+            {audioUrl ? (
+              <audio controls src={audioUrl} className="w-full rounded-xl" />
+            ) : (
+              <p className="text-zinc-500">No soundtrack available.</p>
+            )}
 
-        {audioUrl && (
-          <audio
-            controls
-            src={audioUrl}
-            className="w-full rounded-xl border border-zinc-200 bg-zinc-100 p-2"
-          />
-        )}
+            <button
+              onClick={downloadAlbum}
+              className="mt-6 w-full rounded-xl bg-zinc-900 py-3 font-semibold text-white transition hover:bg-zinc-800"
+            >
+              📥 Download Album Cover
+            </button>
+          </section>
 
-        <div className="space-y-4 rounded-2xl border border-zinc-200 bg-zinc-50 p-5">
-          <h2 className="text-lg font-semibold">Get a copy of your Echo</h2>
+          <section className="rounded-3xl bg-white p-6 shadow-lg ring-1 ring-zinc-200">
+            <h2 className="text-xl font-bold text-zinc-900">
+              📧 Keep your Echo
+            </h2>
 
-          <p className="text-sm text-zinc-500">
-            Enter your email and we'll send you your album art and soundtrack.
-          </p>
-
-          <input
-            ref={emailRef}
-            type="email"
-            placeholder="you@example.com"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            className="w-full rounded-xl border border-zinc-300 p-3 outline-none focus:border-zinc-900"
-          />
-
-          <button
-            onClick={sendEmail}
-            disabled={sending || sent || !email}
-            className="w-full rounded-xl bg-zinc-900 py-3 font-semibold text-white transition hover:bg-zinc-800 disabled:cursor-not-allowed disabled:opacity-60"
-          >
-            {sent ? "✓ Email Sent" : sending ? "Sending..." : "Send me my Echo"}
-          </button>
-
-          {sent && (
-            <p className="text-sm text-green-600">
-              🎉 Your Echo has been emailed.
+            <p className="mt-2 text-sm leading-relaxed text-zinc-600">
+              We'll send you a private link so you can revisit your Echo
+              anytime.
             </p>
-          )}
 
-          {emailError && (
-            <p className="text-sm text-red-500">
-              Couldn't send email. Please use the QR code instead.
+            <input
+              type="email"
+              value={email}
+              disabled={sending || sent}
+              onChange={(e) => setEmail(e.target.value)}
+              placeholder="Enter your email"
+              className="mt-5 w-full rounded-xl border border-zinc-300 px-4 py-3 transition outline-none focus:border-zinc-900"
+            />
+
+            {emailError && (
+              <p className="mt-3 text-sm text-red-500">{emailError}</p>
+            )}
+
+            {sent ? (
+              <div className="mt-5 rounded-xl bg-emerald-50 p-4 text-center text-emerald-700 ring-1 ring-emerald-200">
+                <p className="font-semibold">✅ Check your inbox!</p>
+
+                <p className="mt-1 text-sm">Your Echo is on its way.</p>
+              </div>
+            ) : (
+              <button
+                onClick={sendEmail}
+                disabled={sending}
+                className="mt-5 w-full rounded-xl bg-zinc-900 py-3 font-semibold text-white transition hover:bg-zinc-800 disabled:cursor-not-allowed disabled:opacity-60"
+              >
+                {sending ? "Sending..." : "📧 Email My Echo"}
+              </button>
+            )}
+          </section>
+
+          <section className="rounded-3xl bg-white p-6 shadow-lg ring-1 ring-zinc-200">
+            <h2 className="text-xl font-bold text-zinc-900">
+              Continue on your phone
+            </h2>
+
+            <p className="mt-2 text-sm text-zinc-600">
+              Scan this QR code to listen, download and share your Echo.
             </p>
-          )}
-        </div>
 
-        <h2 className="text-lg font-semibold">📱 Scan & Save</h2>
+            <div className="mt-6 flex justify-center">
+              <div className="rounded-2xl bg-white p-4 shadow ring-1 ring-zinc-200">
+                {shareUrl && (
+                  <QRCodeSVG value={shareUrl} size={220} includeMargin />
+                )}
+              </div>
+            </div>
+          </section>
 
-        <p className="text-sm text-zinc-500">
-          Open your Echo on your own device.
-        </p>
+          <section className="rounded-3xl bg-white p-6 text-center shadow-lg ring-1 ring-zinc-200">
+            <p className="text-sm tracking-[0.3em] text-zinc-500 uppercase">
+              Session Ends In
+            </p>
 
-        <div className="flex flex-col items-center gap-2 pt-4">
-          <QRCodeSVG
-            value={shareUrl}
-            size={160}
-            bgColor="#ffffff"
-            fgColor="#000000"
-          />
-          <div
-            className={`rounded-xl border p-5 transition-all duration-700 ${
-              secondsLeft <= 10
-                ? "border-red-200 bg-red-50"
-                : "border-zinc-200 bg-zinc-100"
-            }`}
-          >
-            <p className="text-sm text-zinc-500">Returning to Home</p>
-            <p className="text-5xl font-bold">{secondsLeft}</p>
-          </div>
+            <p className="mt-3 text-6xl font-black text-zinc-900">
+              {secondsLeft}
+            </p>
+
+            <p className="mt-2 text-zinc-500">seconds</p>
+          </section>
         </div>
       </div>
     </main>

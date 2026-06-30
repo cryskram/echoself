@@ -8,16 +8,17 @@ export async function uploadToCloudinary(base64: string) {
   const timestamp = Math.floor(Date.now() / 1000);
   const publicId = `echoself/${crypto.randomUUID()}`;
 
-  const transformation = [
-    "l_echoself:logo-left,w_120,c_fit,g_north_west,x_24,y_24",
-    "l_echoself:logo-right,w_120,c_fit,g_north_east,x_24,y_24",
-  ].join("/");
+  // const transformation = [
+  //   "l_echoself:logo-left,w_120,c_fit,g_north_west,x_24,y_24",
+  //   "l_echoself:logo-right,w_120,c_fit,g_north_east,x_24,y_24",
+  // ].join("/");
 
   const signature = crypto
     .createHash("sha1")
-    .update(
-      `public_id=${publicId}&timestamp=${timestamp}&transformation=${transformation}${apiSecret}`
-    )
+    // .update(
+    //   `public_id=${publicId}&timestamp=${timestamp}&transformation=${transformation}${apiSecret}`
+    // )
+    .update(`public_id=${publicId}&timestamp=${timestamp}${apiSecret}`)
     .digest("hex");
 
   const form = new FormData();
@@ -25,7 +26,7 @@ export async function uploadToCloudinary(base64: string) {
   form.append("api_key", apiKey);
   form.append("timestamp", String(timestamp));
   form.append("public_id", publicId);
-  form.append("transformation", transformation);
+  // form.append("transformation", transformation);
   form.append("signature", signature);
 
   const res = await fetch(
