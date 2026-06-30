@@ -16,7 +16,7 @@ export default function ResultClient() {
   const audio = params.get("audio");
   const genre = params.get("genre");
 
-  const [secondsLeft, setSecondsLeft] = useState(60);
+  const [secondsLeft, setSecondsLeft] = useState(100);
 
   const [shareUrl, setShareUrl] = useState("");
 
@@ -159,10 +159,10 @@ export default function ResultClient() {
           />
         </div>
 
-        <div className="w-full max-w-xl space-y-6">
+        <div className="mx-auto w-full max-w-xl space-y-6">
           <section className="rounded-3xl bg-white p-6 shadow-lg ring-1 ring-zinc-200">
             <h2 className="mb-5 text-xl font-bold text-zinc-900">
-              🎵 Listen to your soundtrack
+              Listen to your soundtrack
             </h2>
 
             {audioUrl ? (
@@ -175,14 +175,12 @@ export default function ResultClient() {
               onClick={downloadAlbum}
               className="mt-6 w-full rounded-xl bg-zinc-900 py-3 font-semibold text-white transition hover:bg-zinc-800"
             >
-              📥 Download Album Cover
+              Download Album Cover
             </button>
           </section>
 
           <section className="rounded-3xl bg-white p-6 shadow-lg ring-1 ring-zinc-200">
-            <h2 className="text-xl font-bold text-zinc-900">
-              📧 Keep your Echo
-            </h2>
+            <h2 className="text-xl font-bold text-zinc-900">Keep your Echo</h2>
 
             <p className="mt-2 text-sm leading-relaxed text-zinc-600">
               We'll send you a private link so you can revisit your Echo

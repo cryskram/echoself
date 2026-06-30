@@ -7,6 +7,7 @@ import ImageUpload from "@/components/ImageUpload";
 import GenrePicker from "@/components/GenrePicker";
 import Modal from "@/components/Modal";
 import SponsorStrip from "@/components/SponsorStrip";
+import GenerationOverlay from "@/components/GenerationOverlay";
 
 // import { GET_USERS, CONSUME_GENERATION } from "@/graphql/operations";
 // import AdminResetPanel from "@/components/AdminResetPanel";
@@ -235,6 +236,8 @@ export default function Home() {
           <p className="text-sm text-zinc-500">See yourself. Hear yourself.</p>
         </footer>
       </div>
+
+      <GenerationOverlay open={loading} />
 
       {modal && (
         <Modal
