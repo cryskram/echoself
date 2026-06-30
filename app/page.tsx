@@ -143,30 +143,63 @@ export default function Home() {
   return (
     <main className="flex min-h-screen items-center justify-center bg-linear-to-br from-zinc-200 via-white to-zinc-200 p-6 text-zinc-900">
       <div className="w-full max-w-xl space-y-8">
-        <div className="flex items-center justify-center gap-8">
-          <Image
-            src="/images/bangaloresec.png"
-            alt="SPS"
-            height={32}
-            width={200}
-          />
-          <Image
-            src="/images/dataport.png"
-            alt="SPS"
-            width={200}
-            height={32}
-            className="mt-2"
-          />
+        <div className="mb-8 flex flex-col items-center gap-6">
+          <div className="flex w-full items-center justify-center gap-10 md:gap-20">
+            <Image
+              src="/images/bangaloresec.png"
+              alt="IEEE Bangalore Section"
+              width={190}
+              height={50}
+              className="h-12 w-auto object-contain"
+            />
+
+            <Image
+              src="/images/bangalore50.png"
+              alt="IEEE Bangalore 50"
+              width={200}
+              height={50}
+              className="h-16 w-auto object-contain"
+            />
+          </div>
+
+          <div className="flex flex-wrap items-center justify-center gap-8 md:gap-14">
+            <Image
+              src="/images/dataport.png"
+              alt="IEEE DataPort"
+              width={150}
+              height={40}
+              className="h-8 w-auto object-contain"
+            />
+
+            <Image
+              src="/images/conecct.png"
+              alt="Conecct"
+              width={150}
+              height={40}
+              className="h-12 w-auto object-contain"
+            />
+
+            <Image
+              src="/images/csbc.png"
+              alt="CSBC"
+              width={150}
+              height={40}
+              className="h-16 w-auto object-contain"
+            />
+          </div>
         </div>
 
-        <div className="text-center">
+        <div className="mt-6 text-center">
           <h1 className="text-4xl font-bold uppercase">
             Echo
-            <span className="rounded-xl bg-zinc-900 px-2 py-0.5 text-white">
+            <span className="ml-1 rounded-xl bg-zinc-900 px-2 py-0.5 text-white">
               Self
             </span>
           </h1>
-          <p className="mt-2 text-zinc-600">See yourself. Hear yourself.</p>
+
+          <p className="mt-2 text-lg text-zinc-600">
+            See yourself. Hear yourself.
+          </p>
         </div>
 
         <div className="space-y-6 rounded-2xl bg-white p-6 shadow-xl ring-1 ring-zinc-200">

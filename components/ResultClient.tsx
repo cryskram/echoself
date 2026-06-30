@@ -26,20 +26,50 @@ export default function ResultClient() {
   return (
     <main className="flex min-h-screen items-center justify-center bg-zinc-50 p-6">
       <div className="w-full max-w-md space-y-6 rounded-2xl bg-white p-6 text-center shadow-lg ring-1 ring-zinc-200">
-        <div className="flex justify-center gap-6">
-          <Image
-            src="/images/bangaloresec.png"
-            alt="SPS"
-            height={32}
-            width={200}
-          />
-          <Image
-            src="/images/dataport.png"
-            alt="SPS"
-            width={200}
-            height={32}
-            className="mt-2"
-          />
+        <div className="mb-8 flex flex-col items-center gap-6">
+          <div className="flex w-full items-center justify-center gap-10 md:gap-20">
+            <Image
+              src="/images/bangaloresec.png"
+              alt="IEEE Bangalore Section"
+              width={190}
+              height={50}
+              className="h-12 w-auto object-contain"
+            />
+
+            <Image
+              src="/images/bangalore50.png"
+              alt="IEEE Bangalore 50"
+              width={200}
+              height={50}
+              className="h-16 w-auto object-contain"
+            />
+          </div>
+
+          <div className="flex flex-wrap items-center justify-center gap-8 md:gap-14">
+            <Image
+              src="/images/dataport.png"
+              alt="IEEE DataPort"
+              width={150}
+              height={40}
+              className="h-8 w-auto object-contain"
+            />
+
+            <Image
+              src="/images/conecct.png"
+              alt="Conecct"
+              width={150}
+              height={40}
+              className="h-12 w-auto object-contain"
+            />
+
+            <Image
+              src="/images/csbc.png"
+              alt="CSBC"
+              width={150}
+              height={40}
+              className="h-16 w-auto object-contain"
+            />
+          </div>
         </div>
 
         <h1 className="text-2xl font-bold text-zinc-900 uppercase">
