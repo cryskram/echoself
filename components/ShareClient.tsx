@@ -4,6 +4,7 @@ import { useRef } from "react";
 import { toPng } from "html-to-image";
 
 import AlbumCard from "./AlbumCard";
+import { toast } from "sonner";
 
 type Props = {
   img: string;
@@ -53,7 +54,7 @@ export default function ShareClient({ img, genre, audio }: Props) {
           />
         </div>
 
-        <div className="w-full max-w-xl space-y-6">
+        <div className="mx-auto w-full max-w-xl space-y-6">
           <section className="rounded-3xl bg-white p-6 shadow-lg ring-1 ring-zinc-200">
             <h2 className="mb-5 text-xl font-bold text-zinc-900">
               🎵 Now Playing
@@ -76,7 +77,7 @@ export default function ShareClient({ img, genre, audio }: Props) {
             </h2>
 
             <p className="mt-2 text-sm leading-relaxed text-zinc-600">
-              Save your personalized Echo album exactly as shown.
+              Download your personalized Echo album exactly as shown.
             </p>
 
             <button
@@ -92,18 +93,72 @@ export default function ShareClient({ img, genre, audio }: Props) {
               📤 Share Your Echo
             </h2>
 
-            <p className="mt-2 text-sm leading-relaxed text-zinc-600">
-              Copy this page and share your personalized Echo with your friends.
+            <p className="mt-2 leading-relaxed text-zinc-600">
+              We'd love to see your Echo on social media! Share your
+              personalized album cover on LinkedIn, Instagram or X and tag the
+              organizations below.
             </p>
+
+            <div className="mt-5 rounded-2xl border border-zinc-200 bg-zinc-50 p-4">
+              <p className="text-sm font-semibold text-zinc-800">Tag us</p>
+
+              <div className="mt-3 flex flex-wrap gap-2">
+                {[
+                  "IEEE Bangalore Section",
+                  "IEEE CONECCT",
+                  "IEEE Computer Society Bangalore Chapter",
+                  "IEEE DataPort",
+                ].map((tag) => (
+                  <span
+                    key={tag}
+                    className="rounded-full bg-zinc-900 px-3 py-1 text-sm font-medium text-white"
+                  >
+                    {tag}
+                  </span>
+                ))}
+              </div>
+            </div>
 
             <button
               onClick={async () => {
                 await navigator.clipboard.writeText(window.location.href);
-                alert("Share link copied!");
+                toast.success("Share link copied!");
               }}
               className="mt-6 w-full rounded-xl border border-zinc-300 py-3 font-semibold transition hover:bg-zinc-100"
             >
-              Copy Share Link
+              📋 Copy Share Link
+            </button>
+          </section>
+
+          <section className="rounded-3xl bg-white p-6 shadow-lg ring-1 ring-zinc-200">
+            <h2 className="text-xl font-bold text-zinc-900">
+              ✨ Suggested Caption
+            </h2>
+
+            <div className="mt-4 rounded-2xl bg-zinc-50 p-4">
+              <p className="text-sm leading-relaxed whitespace-pre-line text-zinc-700">
+                {`Just discovered my AI-generated music identity with EchoSelf! 🎵✨
+
+Created my own personalized album cover and soundtrack at IEEE CONECCT 2026.
+
+#EchoSelf #AI #Music #IEEE #IEEECONECCT #IEEEDataPort`}
+              </p>
+            </div>
+
+            <button
+              onClick={async () => {
+                await navigator.clipboard
+                  .writeText(`Just discovered my AI-generated music identity with EchoSelf! 🎵✨
+
+Created my own personalized album cover and soundtrack at IEEE CONECCT 2026.
+
+#EchoSelf #AI #Music #IEEE #IEEECONECCT #IEEEDataPort`);
+
+                toast.success("Caption copied!");
+              }}
+              className="mt-5 w-full rounded-xl bg-zinc-900 py-3 font-semibold text-white transition hover:bg-zinc-800"
+            >
+              📋 Copy Caption
             </button>
           </section>
 

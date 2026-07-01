@@ -21,30 +21,25 @@ export async function sendEchoEmail({
 <!DOCTYPE html>
 <html>
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width,initial-scale=1.0" />
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 </head>
 
-<body style="
-margin:0;
-padding:32px;
-background:#f4f4f5;
-font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;
-">
+<body style="margin:0;padding:0;background:#f4f4f5;font-family:Arial,Helvetica,sans-serif;">
 
-<table width="100%" cellpadding="0" cellspacing="0">
+<table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="background:#f4f4f5;padding:24px 12px;">
 <tr>
 <td align="center">
 
-<table
-width="600"
+<table role="presentation"
+width="100%"
 cellpadding="0"
 cellspacing="0"
 style="
+max-width:600px;
 background:#ffffff;
-border-radius:24px;
+border-radius:20px;
 overflow:hidden;
-box-shadow:0 12px 40px rgba(0,0,0,.08);
 ">
 
 <tr>
@@ -52,22 +47,24 @@ box-shadow:0 12px 40px rgba(0,0,0,.08);
 align="center"
 style="
 background:#111827;
-padding:48px;
+padding:36px 24px;
 ">
 
 <h1 style="
 margin:0;
-font-size:40px;
+font-size:34px;
+line-height:1.2;
 font-weight:800;
-color:white;
+color:#ffffff;
 ">
 
 Echo<span style="
-background:white;
+background:#ffffff;
 color:#111827;
-padding:4px 12px;
-border-radius:10px;
-margin-left:6px;
+padding:3px 10px;
+border-radius:8px;
+margin-left:4px;
+display:inline-block;
 ">
 
 Self
@@ -77,12 +74,13 @@ Self
 </h1>
 
 <p style="
-margin-top:18px;
-font-size:18px;
+margin:16px 0 0;
+font-size:17px;
+line-height:1.6;
 color:#d1d5db;
 ">
 
-Your Echo is ready.
+Your personalized Echo is ready.
 
 </p>
 
@@ -90,30 +88,31 @@ Your Echo is ready.
 </tr>
 
 <tr>
-<td style="padding:40px;">
+<td style="padding:28px;">
 
 <img
 src="${imageUrl}"
+alt="EchoSelf Album"
 style="
-width:100%;
-border-radius:20px;
 display:block;
-box-shadow:0 8px 24px rgba(0,0,0,.15);
+width:100%;
+max-width:100%;
+height:auto;
+border-radius:18px;
 "
 />
 
-<div
-style="
+<div style="
+margin-top:24px;
 display:inline-block;
-margin:24px 0 8px;
+background:#111827;
+color:#ffffff;
 padding:8px 16px;
-background:#18181b;
-color:white;
 border-radius:999px;
 font-size:13px;
-font-weight:600;
-letter-spacing:.08em;
+font-weight:bold;
 text-transform:uppercase;
+letter-spacing:.08em;
 ">
 
 ${genre}
@@ -121,8 +120,9 @@ ${genre}
 </div>
 
 <h2 style="
-margin:12px 0;
-font-size:30px;
+margin:18px 0 12px;
+font-size:28px;
+line-height:1.3;
 color:#111827;
 ">
 
@@ -132,63 +132,67 @@ Your ${genre.charAt(0).toUpperCase() + genre.slice(1)} Echo is Ready
 
 <p style="
 margin:0;
-font-size:17px;
+font-size:16px;
 line-height:1.8;
 color:#52525b;
 ">
 
-Your personalized AI-generated album artwork and soundtrack are waiting for you.
+Your AI-generated album artwork and soundtrack are waiting for you.
 
-Open your Echo to listen, download your album cover and share it with your friends.
+Open your Echo to listen, download your album cover, and share it with your friends.
 
 </p>
 
-<div style="
-margin-top:36px;
-text-align:center;
-">
+<table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="margin-top:32px;">
+<tr>
+<td align="center">
 
 <a
 href="${shareUrl}"
 style="
-display:inline-block;
-padding:16px 36px;
 background:#111827;
-color:white;
+color:#ffffff;
 text-decoration:none;
-font-weight:700;
-font-size:17px;
-border-radius:14px;
+padding:16px 30px;
+border-radius:12px;
+display:inline-block;
+font-size:16px;
+font-weight:bold;
 ">
 
 🎵 Open My Echo
 
 </a>
 
-</div>
+</td>
+</tr>
+</table>
 
 <table
+role="presentation"
 width="100%"
+cellpadding="0"
+cellspacing="0"
 style="
-margin-top:36px;
+margin-top:32px;
 background:#f8fafc;
-border-radius:16px;
-"
->
+border:1px solid #e5e7eb;
+border-radius:14px;
+">
 
 <tr>
-
 <td
-align="center"
 style="
-padding:26px;
+padding:24px;
 font-size:15px;
 line-height:2;
 color:#52525b;
 "
 >
 
-✨ Inside your Echo
+<strong style="color:#111827;">
+Inside your Echo
+</strong>
 
 <br><br>
 
@@ -200,10 +204,14 @@ color:#52525b;
 
 <br>
 
-📤 Share it with friends
+📤 Share it on social media
+
+<br>
+
+🏷 Tag IEEE Bangalore Section, IEEE CONECCT,
+IEEE Computer Society Bangalore Chapter and IEEE DataPort
 
 </td>
-
 </tr>
 
 </table>
@@ -212,20 +220,20 @@ color:#52525b;
 </tr>
 
 <tr>
-
 <td
 align="center"
 style="
-padding:36px;
+padding:30px 24px;
 background:#fafafa;
 border-top:1px solid #e5e7eb;
-">
+"
+>
 
 <p style="
 margin:0;
-font-size:16px;
-color:#6b7280;
+font-size:15px;
 line-height:1.8;
+color:#6b7280;
 ">
 
 Every Echo is uniquely yours.
@@ -233,7 +241,7 @@ Every Echo is uniquely yours.
 </p>
 
 <p style="
-margin-top:20px;
+margin:18px 0 0;
 font-size:22px;
 font-weight:800;
 color:#111827;
@@ -241,10 +249,11 @@ color:#111827;
 
 Echo<span style="
 background:#111827;
-color:white;
+color:#ffffff;
 padding:2px 10px;
 border-radius:8px;
 margin-left:4px;
+display:inline-block;
 ">
 
 Self
@@ -253,8 +262,17 @@ Self
 
 </p>
 
-</td>
+<p style="
+margin:18px 0 0;
+font-size:13px;
+color:#9ca3af;
+">
 
+See yourself. Hear yourself.
+
+</p>
+
+</td>
 </tr>
 
 </table>
