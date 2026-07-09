@@ -208,8 +208,7 @@ Inside your Echo
 
 <br>
 
-🏷 Tag IEEE Bangalore Section, IEEE CONECCT,
-IEEE Computer Society Bangalore Chapter and IEEE DataPort
+🏷 Tag IEEE Bangalore Section and IEEE Computer Society Bangalore Chapter
 
 </td>
 </tr>

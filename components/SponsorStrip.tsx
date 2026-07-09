@@ -24,7 +24,7 @@ export default function SponsorStrip() {
 
         <div className="h-px w-full bg-zinc-200" />
 
-        <div className="flex flex-wrap items-center justify-center gap-14">
+        {/* <div className="flex flex-wrap items-center justify-center gap-14">
           <Image
             src="/images/dataport.png"
             alt="IEEE DataPort"
@@ -48,7 +48,15 @@ export default function SponsorStrip() {
             height={40}
             className="h-11 w-auto object-contain"
           />
-        </div>
+        </div> */}
+
+        <Image
+          src="/images/cs80.png"
+          alt="IEEE CSBC"
+          width={150}
+          height={40}
+          className="h-15 w-auto object-contain"
+        />
       </div>
     </div>
   );
