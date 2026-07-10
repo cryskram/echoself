@@ -173,7 +173,7 @@ export default function Home() {
           </section>
 
           <section className="mx-auto flex w-full max-w-xl flex-col justify-center">
-            <div>
+            {/* <div>
               <h1 className="text-6xl font-black tracking-tight text-zinc-900">
                 Echo
                 <span className="ml-2 rounded-2xl bg-zinc-900 px-4 text-white">
@@ -185,6 +185,32 @@ export default function Home() {
                 Turn your portrait into a personalized music identity with
                 AI-generated album artwork and a soundtrack inspired by your
                 favorite genre.
+              </p>
+            </div> */}
+
+            <div>
+              <div className="inline-flex items-center rounded-full border border-zinc-300 bg-white px-4 py-2 text-sm font-semibold tracking-wide text-zinc-700 shadow-sm">
+                Karnataka CS Student Congress 2026
+              </div>
+
+              <p className="mt-3 inline-flex items-center gap-2 text-xs font-medium tracking-[0.1rem] text-zinc-500 uppercase">
+                IEEE Computer Society Bangalore Chapter
+                <span className="text-2xl">|</span> AI Experience Booth
+              </p>
+
+              <h1 className="mt-5 text-6xl font-black tracking-tight text-zinc-900">
+                Echo
+                <span className="ml-2 rounded-2xl bg-zinc-900 px-4 text-white">
+                  Self
+                </span>
+              </h1>
+
+              <p className="mt-5 max-w-md leading-relaxed text-zinc-600">
+                An interactive AI experience created for{" "}
+                <strong>Karnataka CS Student Congress 2026</strong>. Upload your
+                portrait, choose your favorite music genre, and discover your
+                personalized album artwork with a soundtrack that matches your
+                vibe.
               </p>
             </div>
 

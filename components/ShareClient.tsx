@@ -44,15 +44,13 @@ export default function ShareClient({ img, genre, audio }: Props) {
 
   const caption = `Just discovered my AI-generated music identity with EchoSelf! 🎵✨
 
-Created my own personalized album cover and soundtrack at IEEE CONECCT 2026.
+Created my own personalized album cover and soundtrack at Karnataka CS Student Congress 2026.
 
 Tag:
 • IEEE Bangalore Section
-• IEEE CONECCT
 • IEEE Computer Society Bangalore Chapter
-• IEEE DataPort
 
-#EchoSelf #AI #Music #IEEE #IEEECONECCT #IEEEDataPort`;
+#EchoSelf #AI #Music #IEEE #StudentCongress #ComputerSociety`;
 
   async function generateAlbumFile() {
     if (!cardRef.current) return null;
@@ -174,9 +172,7 @@ Tag:
               <div className="mt-3 flex flex-wrap gap-2">
                 {[
                   "IEEE Bangalore Section",
-                  "IEEE CONECCT",
                   "IEEE Computer Society Bangalore Chapter",
-                  "IEEE DataPort",
                 ].map((tag) => (
                   <span
                     key={tag}
