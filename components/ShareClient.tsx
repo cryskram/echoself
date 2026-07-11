@@ -171,8 +171,8 @@ Tag:
 
               <div className="mt-3 flex flex-wrap gap-2">
                 {[
-                  "IEEE Bangalore Section",
                   "IEEE Computer Society Bangalore Chapter",
+                  "IEEE Bangalore Section",
                 ].map((tag) => (
                   <span
                     key={tag}
