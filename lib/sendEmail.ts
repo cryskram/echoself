@@ -208,7 +208,7 @@ Inside your Echo
 
 <br>
 
-🏷 Tag IEEE Bangalore Section and IEEE Computer Society Bangalore Chapter
+🏷 Tag ICWITE 2026, IEEE WIE Bangalore Section, IEEE Computer Society Bangalore Chapter and IEEE Bangalore Section
 
 </td>
 </tr>
