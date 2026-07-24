@@ -53,7 +53,7 @@ Tag:
 • IEEE Bangalore Section
 
 
-#EchoSelf #AI #Music #IEEE #StudentCongress #ComputerSociety`;
+#EchoSelf #AI #Music #IEEE #icwite2026 #ComputerSociety`;
 
   async function generateAlbumFile() {
     if (!cardRef.current) return null;
